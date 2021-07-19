@@ -979,111 +979,19 @@ def Play():
                                         Has_Player_WonG = Has_Player_WonG + 1
                                         Has_Player_WonG = Has_Player_WonG + Check_Neighboring_Squares2(Temp_XY[0],Temp_XY[1])
                                         Temp_Zero_List.pop(0)
-                                else:
-                                    if Box_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] == 1:
-                                        wee_coords = Map_Wee(X_coordinate, Y_coordinate)
-                                        wee.penup()
-                                        wee.goto(wee_coords[0], wee_coords[1])
-                                        wee.pendown()
-                                        odd_Or_even = (X_coordinate + Y_coordinate) % 2
-                                        Fill_Square(colors_list[1], odd_Or_even, X_coordinate, Y_coordinate)
-                                        Dig_List[
-                                            Convert_to_Square_ID(X_coordinate, Y_coordinate)
-                                        ] = "dug"
-                                        Flag_List[
-                                            Convert_to_Square_ID(X_coordinate, Y_coordinate)
-                                        ] = "dug"
-                                    if Box_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] == 2:
-                                        wee_coords = Map_Wee(X_coordinate, Y_coordinate)
-                                        wee.penup()
-                                        wee.goto(wee_coords[0], wee_coords[1])
-                                        wee.pendown()
-                                        odd_Or_even = (X_coordinate + Y_coordinate) % 2
-                                        Fill_Square(colors_list[2], odd_Or_even, X_coordinate, Y_coordinate)
-                                        Dig_List[
-                                            Convert_to_Square_ID(X_coordinate, Y_coordinate)
-                                        ] = "dug"
-                                        Flag_List[
-                                            Convert_to_Square_ID(X_coordinate, Y_coordinate)
-                                        ] = "dug"
-                                    if Box_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] == 3:
-                                        wee_coords = Map_Wee(X_coordinate, Y_coordinate)
-                                        wee.penup()
-                                        wee.goto(wee_coords[0], wee_coords[1])
-                                        wee.pendown()
-                                        odd_Or_even = (X_coordinate + Y_coordinate) % 2
-                                        Fill_Square(colors_list[3], odd_Or_even, X_coordinate, Y_coordinate)
-                                        Dig_List[
-                                            Convert_to_Square_ID(X_coordinate, Y_coordinate)
-                                        ] = "dug"
-                                        Flag_List[
-                                            Convert_to_Square_ID(X_coordinate, Y_coordinate)
-                                        ] = "dug"
-                                    if Box_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] == 4:
-                                        wee_coords = Map_Wee(X_coordinate, Y_coordinate)
-                                        wee.penup()
-                                        wee.goto(wee_coords[0], wee_coords[1])
-                                        wee.pendown()
-                                        odd_Or_even = (X_coordinate + Y_coordinate) % 2
-                                        Fill_Square(colors_list[4], odd_Or_even, X_coordinate, Y_coordinate)
-                                        Dig_List[
-                                            Convert_to_Square_ID(X_coordinate, Y_coordinate)
-                                        ] = "dug"
-                                        Flag_List[
-                                            Convert_to_Square_ID(X_coordinate, Y_coordinate)
-                                        ] = "dug"
-                                    if Box_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] == 5:
-                                        wee_coords = Map_Wee(X_coordinate, Y_coordinate)
-                                        wee.penup()
-                                        wee.goto(wee_coords[0], wee_coords[1])
-                                        wee.pendown()
-                                        odd_Or_even = (X_coordinate + Y_coordinate) % 2
-                                        Fill_Square(colors_list[5], odd_Or_even, X_coordinate, Y_coordinate)
-                                        Dig_List[
-                                            Convert_to_Square_ID(X_coordinate, Y_coordinate)
-                                        ] = "dug"
-                                        Flag_List[
-                                            Convert_to_Square_ID(X_coordinate, Y_coordinate)
-                                        ] = "dug"
-                                    if Box_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] == 6:
-                                        wee_coords = Map_Wee(X_coordinate, Y_coordinate)
-                                        wee.penup()
-                                        wee.goto(wee_coords[0], wee_coords[1])
-                                        wee.pendown()
-                                        odd_Or_even = (X_coordinate + Y_coordinate) % 2
-                                        Fill_Square(colors_list[6], odd_Or_even, X_coordinate, Y_coordinate)
-                                        Dig_List[
-                                            Convert_to_Square_ID(X_coordinate, Y_coordinate)
-                                        ] = "dug"
-                                        Flag_List[
-                                            Convert_to_Square_ID(X_coordinate, Y_coordinate)
-                                        ] = "dug"
-                                    if Box_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] == 7:
-                                        wee_coords = Map_Wee(X_coordinate, Y_coordinate)
-                                        wee.penup()
-                                        wee.goto(wee_coords[0], wee_coords[1])
-                                        wee.pendown()
-                                        odd_Or_even = (X_coordinate + Y_coordinate) % 2
-                                        Fill_Square(colors_list[7], odd_Or_even, X_coordinate, Y_coordinate)
-                                        Dig_List[
-                                            Convert_to_Square_ID(X_coordinate, Y_coordinate)
-                                        ] = "dug"
-                                        Flag_List[
-                                            Convert_to_Square_ID(X_coordinate, Y_coordinate)
-                                        ] = "dug"
-                                    if Box_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] == 8:
-                                        wee_coords = Map_Wee(X_coordinate, Y_coordinate)
-                                        wee.penup()
-                                        wee.goto(wee_coords[0], wee_coords[1])
-                                        wee.pendown()
-                                        odd_Or_even = (X_coordinate + Y_coordinate) % 2
-                                        Fill_Square(colors_list[8], odd_Or_even, X_coordinate, Y_coordinate)
-                                        Dig_List[
-                                            Convert_to_Square_ID(X_coordinate, Y_coordinate)
-                                        ] = "dug"
-                                        Flag_List[
-                                            Convert_to_Square_ID(X_coordinate, Y_coordinate)
-                                        ] = "dug"
+                                elif Box_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] == 1 or 2 or 3 or 4 or 5 or 6 or 7 or 8:
+                                    wee_coords = Map_Wee(X_coordinate, Y_coordinate)
+                                    wee.penup()
+                                    wee.goto(wee_coords[0], wee_coords[1])
+                                    wee.pendown()
+                                    odd_Or_even = (X_coordinate + Y_coordinate) % 2
+                                    Fill_Square(colors_list[Box_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)]], odd_Or_even, X_coordinate, Y_coordinate)
+                                    Dig_List[
+                                        Convert_to_Square_ID(X_coordinate, Y_coordinate)
+                                    ] = "dug"
+                                    Flag_List[
+                                        Convert_to_Square_ID(X_coordinate, Y_coordinate)
+                                    ] = "dug"
                                     Has_Player_WonG = Has_Player_WonG + 1
                         else: pass
                     else:
@@ -1232,127 +1140,21 @@ def Play():
                                             Has_Player_WonG = Has_Player_WonG + Check_Neighboring_Squares2(Temp_XY[0],Temp_XY[1])
                                             Temp_Zero_List.pop(0)
                                         turtle_drawing = False
-                                    else:
-                                        if Box_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] == 1:
-                                            turtle_drawing = True
-                                            wee_coords = Map_Wee(X_coordinate, Y_coordinate)
-                                            wee.penup()
-                                            wee.goto(wee_coords[0], wee_coords[1])
-                                            wee.pendown()
-                                            odd_Or_even = (X_coordinate + Y_coordinate) % 2
-                                            Fill_Square(colors_list[1], odd_Or_even, X_coordinate, Y_coordinate)
-                                            Dig_List[
-                                                Convert_to_Square_ID(X_coordinate, Y_coordinate)
-                                            ] = "dug"
-                                            Flag_List[
-                                                Convert_to_Square_ID(X_coordinate, Y_coordinate)
-                                            ] = "dug"
-                                            turtle_drawing = False
-                                        if Box_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] == 2:
-                                            turtle_drawing = True
-                                            wee_coords = Map_Wee(X_coordinate, Y_coordinate)
-                                            wee.penup()
-                                            wee.goto(wee_coords[0], wee_coords[1])
-                                            wee.pendown()
-                                            odd_Or_even = (X_coordinate + Y_coordinate) % 2
-                                            Fill_Square(colors_list[2], odd_Or_even, X_coordinate, Y_coordinate)
-                                            Dig_List[
-                                                Convert_to_Square_ID(X_coordinate, Y_coordinate)
-                                            ] = "dug"
-                                            Flag_List[
-                                                Convert_to_Square_ID(X_coordinate, Y_coordinate)
-                                            ] = "dug"
-                                            turtle_drawing = False
-                                        if Box_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] == 3:
-                                            turtle_drawing = True
-                                            wee_coords = Map_Wee(X_coordinate, Y_coordinate)
-                                            wee.penup()
-                                            wee.goto(wee_coords[0], wee_coords[1])
-                                            wee.pendown()
-                                            odd_Or_even = (X_coordinate + Y_coordinate) % 2
-                                            Fill_Square(colors_list[3], odd_Or_even, X_coordinate, Y_coordinate)
-                                            Dig_List[
-                                                Convert_to_Square_ID(X_coordinate, Y_coordinate)
-                                            ] = "dug"
-                                            Flag_List[
-                                                Convert_to_Square_ID(X_coordinate, Y_coordinate)
-                                            ] = "dug"
-                                            turtle_drawing = False
-                                        if Box_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] == 4:
-                                            turtle_drawing = True
-                                            wee_coords = Map_Wee(X_coordinate, Y_coordinate)
-                                            wee.penup()
-                                            wee.goto(wee_coords[0], wee_coords[1])
-                                            wee.pendown()
-                                            odd_Or_even = (X_coordinate + Y_coordinate) % 2
-                                            Fill_Square(colors_list[4], odd_Or_even, X_coordinate, Y_coordinate)
-                                            Dig_List[
-                                                Convert_to_Square_ID(X_coordinate, Y_coordinate)
-                                            ] = "dug"
-                                            Flag_List[
-                                                Convert_to_Square_ID(X_coordinate, Y_coordinate)
-                                            ] = "dug"
-                                            turtle_drawing = False
-                                        if Box_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] == 5:
-                                            turtle_drawing = True
-                                            wee_coords = Map_Wee(X_coordinate, Y_coordinate)
-                                            wee.penup()
-                                            wee.goto(wee_coords[0], wee_coords[1])
-                                            wee.pendown()
-                                            odd_Or_even = (X_coordinate + Y_coordinate) % 2
-                                            Fill_Square(colors_list[5], odd_Or_even, X_coordinate, Y_coordinate)
-                                            Dig_List[
-                                                Convert_to_Square_ID(X_coordinate, Y_coordinate)
-                                            ] = "dug"
-                                            Flag_List[
-                                                Convert_to_Square_ID(X_coordinate, Y_coordinate)
-                                            ] = "dug"
-                                            turtle_drawing = False
-                                        if Box_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] == 6:
-                                            turtle_drawing = True
-                                            wee_coords = Map_Wee(X_coordinate, Y_coordinate)
-                                            wee.penup()
-                                            wee.goto(wee_coords[0], wee_coords[1])
-                                            wee.pendown()
-                                            odd_Or_even = (X_coordinate + Y_coordinate) % 2
-                                            Fill_Square(colors_list[6], odd_Or_even, X_coordinate, Y_coordinate)
-                                            Dig_List[
-                                                Convert_to_Square_ID(X_coordinate, Y_coordinate)
-                                            ] = "dug"
-                                            Flag_List[
-                                                Convert_to_Square_ID(X_coordinate, Y_coordinate)
-                                            ] = "dug"
-                                            turtle_drawing = False
-                                        if Box_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] == 7:
-                                            turtle_drawing = True
-                                            wee_coords = Map_Wee(X_coordinate, Y_coordinate)
-                                            wee.penup()
-                                            wee.goto(wee_coords[0], wee_coords[1])
-                                            wee.pendown()
-                                            odd_Or_even = (X_coordinate + Y_coordinate) % 2
-                                            Fill_Square(colors_list[7], odd_Or_even, X_coordinate, Y_coordinate)
-                                            Dig_List[
-                                                Convert_to_Square_ID(X_coordinate, Y_coordinate)
-                                            ] = "dug"
-                                            Flag_List[
-                                                Convert_to_Square_ID(X_coordinate, Y_coordinate)
-                                            ] = "dug"
-                                            turtle_drawing = False
-                                        if Box_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] == 8:
-                                            turtle_drawing = True
-                                            wee_coords = Map_Wee(X_coordinate, Y_coordinate)
-                                            wee.penup()
-                                            wee.goto(wee_coords[0], wee_coords[1])
-                                            wee.pendown()
-                                            odd_Or_even = (X_coordinate + Y_coordinate) % 2
-                                            Fill_Square(colors_list[8], odd_Or_even, X_coordinate, Y_coordinate)
-                                            Dig_List[
-                                                Convert_to_Square_ID(X_coordinate, Y_coordinate)
-                                            ] = "dug"
-                                            Flag_List[
-                                                Convert_to_Square_ID(X_coordinate, Y_coordinate)
-                                            ] = "dug"
-                                            turtle_drawing = False
+                                    elif Box_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] == 1 or 2 or 3 or 4 or 5 or 6 or 7 or 8:
+                                        turtle_drawing = True
+                                        wee_coords = Map_Wee(X_coordinate, Y_coordinate)
+                                        wee.penup()
+                                        wee.goto(wee_coords[0], wee_coords[1])
+                                        wee.pendown()
+                                        odd_Or_even = (X_coordinate + Y_coordinate) % 2
+                                        Fill_Square(colors_list[Box_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)]], odd_Or_even, X_coordinate, Y_coordinate)
+                                        Dig_List[
+                                            Convert_to_Square_ID(X_coordinate, Y_coordinate)
+                                        ] = "dug"
+                                        Flag_List[
+                                            Convert_to_Square_ID(X_coordinate, Y_coordinate)
+                                        ] = "dug"
+                                        turtle_drawing = False
                                         Has_Player_WonG = Has_Player_WonG + 1
                             else: pass
                         else:
