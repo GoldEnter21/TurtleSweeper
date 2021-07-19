@@ -370,163 +370,56 @@ def Play():
     # Checks Neighboring tiles for bombs (used in Create_Game2)
     def Check_Neighboring_Squares(x, y):
         num_Surrounding_Bomb = 0
-        if Convert_to_Square_ID(x - 1, y) != "null":
-            if Box_List[Convert_to_Square_ID(x - 1, y)] == "bomb":
-                num_Surrounding_Bomb = num_Surrounding_Bomb + 1
-        if Convert_to_Square_ID(x - 1, y - 1) != "null":
-            if Box_List[Convert_to_Square_ID(x - 1, y - 1)] == "bomb":
-                num_Surrounding_Bomb = num_Surrounding_Bomb + 1
-        if Convert_to_Square_ID(x, y - 1) != "null":
-            if Box_List[Convert_to_Square_ID(x, y - 1)] == "bomb":
-                num_Surrounding_Bomb = num_Surrounding_Bomb + 1
-        if Convert_to_Square_ID(x + 1, y - 1) != "null":
-            if Box_List[Convert_to_Square_ID(x + 1, y - 1)] == "bomb":
-                num_Surrounding_Bomb = num_Surrounding_Bomb + 1
-        if Convert_to_Square_ID(x + 1, y) != "null":
-            if Box_List[Convert_to_Square_ID(x + 1, y)] == "bomb":
-                num_Surrounding_Bomb = num_Surrounding_Bomb + 1
-        if Convert_to_Square_ID(x + 1, y + 1) != "null":
-            if Box_List[Convert_to_Square_ID(x + 1, y + 1)] == "bomb":
-                num_Surrounding_Bomb = num_Surrounding_Bomb + 1
-        if Convert_to_Square_ID(x, y + 1) != "null":
-            if Box_List[Convert_to_Square_ID(x, y + 1)] == "bomb":
-                num_Surrounding_Bomb = num_Surrounding_Bomb + 1
-        if Convert_to_Square_ID(x - 1, y + 1) != "null":
-            if Box_List[Convert_to_Square_ID(x - 1, y + 1)] == "bomb":
-                num_Surrounding_Bomb = num_Surrounding_Bomb + 1
+        yiay = [-1, 0, 1]
+        oxen = [-1, 0, 1]
+        yiayI = 0
+        oxenI = 0
+        itera = 1
+        while itera <= 9:
+            Y_y = y + yiay[yiayI]
+            X_x = x + oxen[oxenI]
+            if Convert_to_Square_ID(X_x, Y_y) != "null":
+                if Box_List[Convert_to_Square_ID(X_x, Y_y)] == "bomb":
+                    num_Surrounding_Bomb = num_Surrounding_Bomb + 1
+            if itera % 3 == 0:
+                oxenI = 0
+                yiayI = yiayI + 1
+            else:
+                oxenI = oxenI + 1
+            itera = itera + 1
         return num_Surrounding_Bomb
 
     def Check_Neighboring_Squares2(x,y):
         add_to_Player1 = 0
-        numList = 0
-        if Convert_to_Square_ID(x-1,y) != "null":
-            if Dig_List[Convert_to_Square_ID(x-1,y)] == 0:
-                if Box_List[Convert_to_Square_ID(x-1,y)] > 0:
-                    Dig_List[Convert_to_Square_ID(x-1,y)] = "dug"
-                    Flag_List[Convert_to_Square_ID(x-1,y)] = "dug"
-                    wee_cords = Map_Wee(x-1,y)
-                    wee.penup()
-                    wee.goto(wee_cords[0],wee_cords[1])
-                    wee.pendown()
-                    odd_Or_even2 = ((x-1) + y) % 2
-                    Fill_Square(colors_list[Box_List[Convert_to_Square_ID(x-1,y)]], odd_Or_even2, x-1, y)
-                    add_to_Player1 = add_to_Player1 + 1
-                if Box_List[Convert_to_Square_ID(x-1,y)] == 0:
-                    if Temp_Zero_List.count(Convert_to_Square_ID(x-1,y)) == 0:
-                        Temp_Zero_List.append(Convert_to_Square_ID(x-1,y))
-                        numList = numList + 1
-        if Convert_to_Square_ID(x-1,y-1) != "null":
-            if Dig_List[Convert_to_Square_ID(x-1,y-1)] == 0:
-                if Box_List[Convert_to_Square_ID(x-1,y-1)] > 0:
-                    Dig_List[Convert_to_Square_ID(x-1,y-1)] = "dug"
-                    Flag_List[Convert_to_Square_ID(x-1,y-1)] = "dug"
-                    wee_cords = Map_Wee(x-1,y-1)
-                    wee.penup()
-                    wee.goto(wee_cords[0],wee_cords[1])
-                    wee.pendown()
-                    odd_Or_even2 = ((x-1) + (y-1)) % 2
-                    Fill_Square(colors_list[Box_List[Convert_to_Square_ID(x-1,y-1)]], odd_Or_even2, x-1, y-1)
-                    add_to_Player1 = add_to_Player1 + 1
-                if Box_List[Convert_to_Square_ID(x-1,y-1)] == 0:
-                    if Temp_Zero_List.count(Convert_to_Square_ID(x-1,y-1)) == 0:
-                        Temp_Zero_List.append(Convert_to_Square_ID(x-1,y-1))
-                        numList = numList + 1
-        if Convert_to_Square_ID(x,y-1) != "null":
-            if Dig_List[Convert_to_Square_ID(x,y-1)] == 0:
-                if Box_List[Convert_to_Square_ID(x,y-1)] > 0:
-                    Dig_List[Convert_to_Square_ID(x,y-1)] = "dug"
-                    Flag_List[Convert_to_Square_ID(x,y-1)] = "dug"
-                    wee_cords = Map_Wee(x,y-1)
-                    wee.penup()
-                    wee.goto(wee_cords[0],wee_cords[1])
-                    wee.pendown()
-                    odd_Or_even2 = (x + (y-1)) % 2
-                    Fill_Square(colors_list[Box_List[Convert_to_Square_ID(x,y-1)]], odd_Or_even2, x, y-1)
-                    add_to_Player1 = add_to_Player1 + 1
-                if Box_List[Convert_to_Square_ID(x,y-1)] == 0:
-                    if Temp_Zero_List.count(Convert_to_Square_ID(x,y-1)) == 0:
-                        Temp_Zero_List.append(Convert_to_Square_ID(x,y-1))
-                        numList = numList + 1
-        if Convert_to_Square_ID(x+1,y-1) != "null":
-            if Dig_List[Convert_to_Square_ID(x+1,y-1)] == 0:
-                if Box_List[Convert_to_Square_ID(x+1,y-1)] > 0:
-                    Dig_List[Convert_to_Square_ID(x+1,y-1)] = "dug"
-                    Flag_List[Convert_to_Square_ID(x+1,y-1)] = "dug"
-                    wee_cords = Map_Wee(x+1,y-1)
-                    wee.penup()
-                    wee.goto(wee_cords[0],wee_cords[1])
-                    wee.pendown()
-                    odd_Or_even2 = ((x+1) + (y-1)) % 2
-                    Fill_Square(colors_list[Box_List[Convert_to_Square_ID(x+1,y-1)]], odd_Or_even2, x+1, y-1)
-                    add_to_Player1 = add_to_Player1 + 1
-                if Box_List[Convert_to_Square_ID(x+1,y-1)] == 0:
-                    if Temp_Zero_List.count(Convert_to_Square_ID(x+1,y-1)) == 0:
-                        Temp_Zero_List.append(Convert_to_Square_ID(x+1,y-1))
-                        numList = numList + 1
-        if Convert_to_Square_ID(x+1,y) != "null":
-            if Dig_List[Convert_to_Square_ID(x+1,y)] == 0:
-                if Box_List[Convert_to_Square_ID(x+1,y)] > 0:
-                    Dig_List[Convert_to_Square_ID(x+1,y)] = "dug"
-                    Flag_List[Convert_to_Square_ID(x+1,y)] = "dug"
-                    wee_cords = Map_Wee(x+1,y)
-                    wee.penup()
-                    wee.goto(wee_cords[0],wee_cords[1])
-                    wee.pendown()
-                    odd_Or_even2 = ((x+1) + y) % 2
-                    Fill_Square(colors_list[Box_List[Convert_to_Square_ID(x+1,y)]], odd_Or_even2, x+1, y)
-                    add_to_Player1 = add_to_Player1 + 1
-                if Box_List[Convert_to_Square_ID(x+1,y)] == 0:
-                    if Temp_Zero_List.count(Convert_to_Square_ID(x+1,y)) == 0:
-                        Temp_Zero_List.append(Convert_to_Square_ID(x+1,y))
-                        numList = numList + 1
-        if Convert_to_Square_ID(x+1,y+1) != "null":
-            if Dig_List[Convert_to_Square_ID(x+1,y+1)] == 0:
-                if Box_List[Convert_to_Square_ID(x+1,y+1)] > 0:
-                    Dig_List[Convert_to_Square_ID(x+1,y+1)] = "dug"
-                    Flag_List[Convert_to_Square_ID(x+1,y+1)] = "dug"
-                    wee_cords = Map_Wee(x+1,y+1)
-                    wee.penup()
-                    wee.goto(wee_cords[0],wee_cords[1])
-                    wee.pendown()
-                    odd_Or_even2 = ((x+1) + (y+1)) % 2
-                    Fill_Square(colors_list[Box_List[Convert_to_Square_ID(x+1,y+1)]], odd_Or_even2, x+1, y+1)
-                    add_to_Player1 = add_to_Player1 + 1
-                if Box_List[Convert_to_Square_ID(x+1,y+1)] == 0:
-                    if Temp_Zero_List.count(Convert_to_Square_ID(x+1,y+1)) == 0:
-                        Temp_Zero_List.append(Convert_to_Square_ID(x+1,y+1))
-                        numList = numList + 1
-        if Convert_to_Square_ID(x,y+1) != "null":
-            if Dig_List[Convert_to_Square_ID(x,y+1)] == 0:
-                if Box_List[Convert_to_Square_ID(x,y+1)] > 0:
-                    Dig_List[Convert_to_Square_ID(x,y+1)] = "dug"
-                    Flag_List[Convert_to_Square_ID(x,y+1)] = "dug"
-                    wee_cords = Map_Wee(x,y+1)
-                    wee.penup()
-                    wee.goto(wee_cords[0],wee_cords[1])
-                    wee.pendown()
-                    odd_Or_even2 = (x + (y+1)) % 2
-                    Fill_Square(colors_list[Box_List[Convert_to_Square_ID(x,y+1)]], odd_Or_even2, x, y+1)
-                    add_to_Player1 = add_to_Player1 + 1
-                if Box_List[Convert_to_Square_ID(x,y+1)] == 0:
-                    if Temp_Zero_List.count(Convert_to_Square_ID(x,y+1)) == 0:
-                        Temp_Zero_List.append(Convert_to_Square_ID(x,y+1))
-                        numList = numList + 1
-        if Convert_to_Square_ID(x-1,y+1) != "null":
-            if Dig_List[Convert_to_Square_ID(x-1,y+1)] == 0:
-                if Box_List[Convert_to_Square_ID(x-1,y+1)] > 0:
-                    Dig_List[Convert_to_Square_ID(x-1,y+1)] = "dug"
-                    Flag_List[Convert_to_Square_ID(x-1,y+1)] = "dug"
-                    wee_cords = Map_Wee(x-1,y+1)
-                    wee.penup()
-                    wee.goto(wee_cords[0],wee_cords[1])
-                    wee.pendown()
-                    odd_Or_even2 = ((x-1) + (y+1)) % 2
-                    Fill_Square(colors_list[Box_List[Convert_to_Square_ID(x-1,y+1)]], odd_Or_even2, x-1, y+1)
-                    add_to_Player1 = add_to_Player1 + 1
-                if Box_List[Convert_to_Square_ID(x-1,y+1)] == 0:
-                    if Temp_Zero_List.count(Convert_to_Square_ID(x-1,y+1)) == 0:
-                        Temp_Zero_List.append(Convert_to_Square_ID(x-1,y+1))
-                        numList = numList + 1
+        yiay = [-1, 0, 1]
+        oxen = [-1, 0, 1]
+        yiayI = 0
+        oxenI = 0
+        itera = 1
+        while itera <= 9:
+            Y_y = y + yiay[yiayI]
+            X_x = x + oxen[oxenI]
+            if Convert_to_Square_ID(X_x, Y_y) != "null":
+                if Dig_List[Convert_to_Square_ID(X_x,Y_y)] == 0:
+                    if Box_List[Convert_to_Square_ID(X_x,Y_y)] > 0:
+                        Dig_List[Convert_to_Square_ID(X_x,Y_y)] = "dug"
+                        Flag_List[Convert_to_Square_ID(X_x,Y_y)] = "dug"
+                        wee_cords = Map_Wee(X_x,Y_y)
+                        wee.penup()
+                        wee.goto(wee_cords[0],wee_cords[1])
+                        wee.pendown()
+                        odd_Or_even2 = (X_x + Y_y) % 2
+                        Fill_Square(colors_list[Box_List[Convert_to_Square_ID(X_x,Y_y)]], odd_Or_even2, X_x, Y_y)
+                        add_to_Player1 = add_to_Player1 + 1
+                    if Box_List[Convert_to_Square_ID(X_x,Y_y)] == 0:
+                        if Temp_Zero_List.count(Convert_to_Square_ID(X_x,Y_y)) == 0:
+                            Temp_Zero_List.append(Convert_to_Square_ID(X_x,Y_y))
+            if itera % 3 == 0:
+                oxenI = 0
+                yiayI = yiayI + 1
+            else:
+                oxenI = oxenI + 1
+            itera = itera + 1
         return add_to_Player1
 
     # Assigns numbers to surrounding tiles in Box_List
