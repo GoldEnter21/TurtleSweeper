@@ -975,92 +975,77 @@ def Play():
                     square_y = (y + ((Square_SizeG * Grid_Height) / 2)) / Square_SizeG + 1
 
                     coordinate_list = [str(int(square_x)), str(int(square_y))]
-                    User_Input = ",".join(coordinate_list)
-                    Type_of_Input = Check_If_Valid_Input(User_Input)
-                    if Type_of_Input == 2:
-                        User_Input_list = User_Input.split(",")
-                        X_coordinate = int(User_Input_list[0])
-                        Y_coordinate = int(User_Input_list[1])
-                        if Convert_to_Square_ID(X_coordinate, Y_coordinate) != "null":
-                            if Flag_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] == 1:
-                                print("You cannot dig an already flagged space! Unflag it first to dig it.")
-                                Exit_Flag = 2
-                            if Exit_Flag == 1:
-                                if Dig_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] == "bomb":
-                                    Game_Over = True
+                    X_coordinate = int(coordinate_list[0])
+                    Y_coordinate = int(coordinate_list[1])
+                    if Convert_to_Square_ID(X_coordinate, Y_coordinate) != "null":
+                        if Flag_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] == 1:
+                            Exit_Flag = 2
+                        if Exit_Flag == 1:
+                            if Dig_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] == "bomb":
+                                Game_Over = True
+                                turtle_drawing = True
+                                print("You failed! Game Over")
+                                add_to_numba = 0
+                                while add_to_numba < Total_Bombs:
+                                    if continue_working == False: break
+                                    numba = Box_List.index("bomb")
+                                    Box_List.pop(numba)
+                                    numba2 = numba + add_to_numba
+                                    wee_coords = Convert_to_Coordinates(numba2)
+                                    wee_coords1 = Map_Wee(wee_coords[0], wee_coords[1])
+                                    wee.penup()
+                                    wee.goto(wee_coords1[0], wee_coords1[1])
+                                    wee.pendown()
+                                    Fill_Square("black", "bruh", "bruhh", "bruhhh")
+                                    add_to_numba = add_to_numba + 1
+                                if continue_working == True:
+                                    Player_Play_Again()
+                                turtle_drawing = False
+                            elif Dig_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] == "dug": pass
+                            else:
+                                if Box_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] == 0:
                                     turtle_drawing = True
-                                    print("You failed! Game Over")
-                                    add_to_numba = 0
-                                    while add_to_numba < Total_Bombs:
+                                    wee_coords = Map_Wee(X_coordinate, Y_coordinate)
+                                    wee.penup()
+                                    wee.goto(wee_coords[0], wee_coords[1])
+                                    wee.pendown()
+                                    odd_Or_even3 = (X_coordinate + Y_coordinate) % 2
+                                    Fill_Square(colors_list[0], odd_Or_even3, X_coordinate, Y_coordinate)
+                                    Dig_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] = "dug"
+                                    Flag_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] = "dug"
+                                    Has_Player_WonG += 1 + Check_Neighboring_Squares2(X_coordinate, Y_coordinate)
+                                    while len(Temp_Zero_List) > 0:
                                         if continue_working == False: break
-                                        numba = Box_List.index("bomb")
-                                        Box_List.pop(numba)
-                                        numba2 = numba + add_to_numba
-                                        wee_coords = Convert_to_Coordinates(numba2)
-                                        wee_coords1 = Map_Wee(wee_coords[0], wee_coords[1])
+                                        Temp_XY = Convert_to_Coordinates(Temp_Zero_List[0])
+                                        weeCoRdas = Map_Wee(Temp_XY[0],Temp_XY[1])
                                         wee.penup()
-                                        wee.goto(wee_coords1[0], wee_coords1[1])
+                                        wee.goto(weeCoRdas[0], weeCoRdas[1])
                                         wee.pendown()
-                                        Fill_Square("black", "bruh", "bruhh", "bruhhh")
-                                        add_to_numba = add_to_numba + 1
-                                    if continue_working == True:
-                                        Player_Play_Again()
-                                    turtle_drawing = False
-                                elif Dig_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] == "dug":
-                                    print("That space has already been dug!")
-                                else:
-                                    if Box_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] == 0:
-                                        turtle_drawing = True
-                                        wee_coords = Map_Wee(X_coordinate, Y_coordinate)
-                                        wee.penup()
-                                        wee.goto(wee_coords[0], wee_coords[1])
-                                        wee.pendown()
-                                        odd_Or_even3 = (X_coordinate + Y_coordinate) % 2
-                                        Fill_Square(colors_list[0], odd_Or_even3, X_coordinate, Y_coordinate)
-                                        Dig_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] = "dug"
-                                        Flag_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] = "dug"
-                                        Has_Player_WonG += 1 + Check_Neighboring_Squares2(X_coordinate, Y_coordinate)
-                                        while len(Temp_Zero_List) > 0:
-                                            if continue_working == False: break
-                                            Temp_XY = Convert_to_Coordinates(Temp_Zero_List[0])
-                                            weeCoRdas = Map_Wee(Temp_XY[0],Temp_XY[1])
-                                            wee.penup()
-                                            wee.goto(weeCoRdas[0], weeCoRdas[1])
-                                            wee.pendown()
-                                            odd_Or_even4 = (Temp_XY[0] + Temp_XY[1]) % 2
-                                            Fill_Square(colors_list[Box_List[Temp_Zero_List[0]]], odd_Or_even4, Temp_XY[0], Temp_XY[1])
-                                            Dig_List[Temp_Zero_List[0]] = "dug"
-                                            Flag_List[Temp_Zero_List[0]] = "dug"
-                                            Has_Player_WonG = Has_Player_WonG + 1
-                                            Has_Player_WonG = Has_Player_WonG + Check_Neighboring_Squares2(Temp_XY[0],Temp_XY[1])
-                                            Temp_Zero_List.pop(0)
-                                        turtle_drawing = False
-                                    elif Box_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] == 1 or 2 or 3 or 4 or 5 or 6 or 7 or 8:
-                                        turtle_drawing = True
-                                        wee_coords = Map_Wee(X_coordinate, Y_coordinate)
-                                        wee.penup()
-                                        wee.goto(wee_coords[0], wee_coords[1])
-                                        wee.pendown()
-                                        odd_Or_even = (X_coordinate + Y_coordinate) % 2
-                                        Fill_Square(colors_list[Box_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)]], odd_Or_even, X_coordinate, Y_coordinate)
-                                        Dig_List[
-                                            Convert_to_Square_ID(X_coordinate, Y_coordinate)
-                                        ] = "dug"
-                                        Flag_List[
-                                            Convert_to_Square_ID(X_coordinate, Y_coordinate)
-                                        ] = "dug"
-                                        turtle_drawing = False
+                                        odd_Or_even4 = (Temp_XY[0] + Temp_XY[1]) % 2
+                                        Fill_Square(colors_list[Box_List[Temp_Zero_List[0]]], odd_Or_even4, Temp_XY[0], Temp_XY[1])
+                                        Dig_List[Temp_Zero_List[0]] = "dug"
+                                        Flag_List[Temp_Zero_List[0]] = "dug"
                                         Has_Player_WonG = Has_Player_WonG + 1
-                            else: pass
-                        else:
-                            print("You have clicked outside the map! Please try again")
-                    if Type_of_Input == 0:
-                        print("You have clicked outside the map! Please try again")
-                    if Type_of_Input == 3:
-                        print("Those coordinates are out of bounds! Please try again")
-                    if Type_of_Input == 4:
-                        print("Quitting Game...")
-                        Game_Over = True
+                                        Has_Player_WonG = Has_Player_WonG + Check_Neighboring_Squares2(Temp_XY[0],Temp_XY[1])
+                                        Temp_Zero_List.pop(0)
+                                    turtle_drawing = False
+                                elif Box_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] == 1 or 2 or 3 or 4 or 5 or 6 or 7 or 8:
+                                    turtle_drawing = True
+                                    wee_coords = Map_Wee(X_coordinate, Y_coordinate)
+                                    wee.penup()
+                                    wee.goto(wee_coords[0], wee_coords[1])
+                                    wee.pendown()
+                                    odd_Or_even = (X_coordinate + Y_coordinate) % 2
+                                    Fill_Square(colors_list[Box_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)]], odd_Or_even, X_coordinate, Y_coordinate)
+                                    Dig_List[
+                                        Convert_to_Square_ID(X_coordinate, Y_coordinate)
+                                    ] = "dug"
+                                    Flag_List[
+                                        Convert_to_Square_ID(X_coordinate, Y_coordinate)
+                                    ] = "dug"
+                                    turtle_drawing = False
+                                    Has_Player_WonG = Has_Player_WonG + 1
+                        else: pass
                 else:
                     if -116 < x < -16:
                         if -75 < y < -25:
@@ -1070,9 +1055,7 @@ def Play():
                         if -75 < y < -25:
                             Would_Play_Again = 2
                             turtle.bye()
-            else:
-                if Game_Over == False:
-                    print('The turtle is still drawing! Please wait before clicking another square.')
+            else: pass
             if Has_Player_WonG == Win_VariableG and show_win_message == True:
                 print("You WON!!!")
                 Game_Over = True
@@ -1094,13 +1077,9 @@ def Play():
                             coordinate_list = ["u:" + str(int(square_x)), str(int(square_y))]
                             User_Input = ",".join(coordinate_list)
                         elif Flag_List[Convert_to_Square_ID(int(square_x), int(square_y))] == "dug":
-                            print("You cannot flag an already dug space!")
-                            User_Input = "f37"
-                    else: User_Input = "f37"
-                    Type_of_Input = Check_If_Valid_Input(User_Input)
-                    if Type_of_Input == 1:
-                        Help_Needed = 0
-                        Help_Lock = 1
+                            User_Input = "null"
+                    else: User_Input = "null"
+                    if User_Input != "null":
                         User_Input_list = User_Input.split(":")
                         if User_Input_list[0] == "f":
                             User_Input_list2 = (User_Input_list[1]).split(",")
@@ -1116,12 +1095,6 @@ def Play():
                                     Fill_Square(colors_list[10], "bruh", "bruhh", "bruhhh")
                                     Flag_List[Convert_to_Square_ID(XcOd, YcOd)] = 1
                                     turtle_drawing = False
-                                elif Flag_List[Convert_to_Square_ID(XcOd, YcOd)] == "dug":
-                                    print("You cannot flag an already dug space!")
-                                elif Flag_List[Convert_to_Square_ID(XcOd, YcOd)] == 1:
-                                    print("That space is already flagged!")
-                            else:
-                                print("Those coordinates are out of bounds! Please try again")
                         elif User_Input_list[0] == "u":
                             User_Input_list2 = (User_Input_list[1]).split(",")
                             XcOd = int(User_Input_list2[0])
@@ -1136,23 +1109,7 @@ def Play():
                                     Fill_Square("white", "bruh", "bruhh", "bruhhh")
                                     Flag_List[Convert_to_Square_ID(XcOd, YcOd)] = 0
                                     turtle_drawing = False
-                                elif Flag_List[Convert_to_Square_ID(XcOd, YcOd)] == "dug" or Flag_List[Convert_to_Square_ID(XcOd, YcOd)] == 0:
-                                    print("That space is already unflagged!")
-                            else:
-                                print("Those coordinates are out of bounds! Please try again")
-                        else:
-                            print("Invalid Action! Please Try Again")
-                    if Type_of_Input == 0:
-                        print("You have clicked outside the map! Please try again")
-                    if Type_of_Input == 3:
-                        print("Those coordinates are out of bounds! Please try again")
-                    if Type_of_Input == 4:
-                        print("Quitting Game...")
-                        Game_Over = True
-                else: print('The game is over! Press "e" to exit')
-            else:
-                if Game_Over == False:
-                    print('The turtle is still drawing! Please wait before clicking another square.')
+            else: pass
 
         def Exit():
             global turtle_drawing
