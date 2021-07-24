@@ -2,9 +2,7 @@ import turtle
 import random
 import math
 
-# test modification
-
-settings_list = ["new", "shown", "connected", "on"]
+settings_list = ["new", "shown", "new", "on"]
 settings_list2 = ["Color Theme:", "Drawing Turtle:", "Grid Textures:", "Mouse Controls:"]
 
 if settings_list[3] == "off":
@@ -31,6 +29,7 @@ def Play():
     global Grid_Width
     global Grid_Height
     global Would_Play_Again
+    global show_win_message
     if settings_list[3] == "off":
         print("---------------------------------------------------------------------")
 
@@ -532,21 +531,21 @@ def Play():
     # Fills squares with correspondent colors based on surrounding bombs
     def Fill_Square(color, value, x, y):
         global continue_working
-        if continue_working == True:
-            if 0 < colors_list.index(color) < 9:
-                if settings_list[0] == "new" or settings_list[0] == "old":
-                    if value == 1:
-                        wee.fillcolor("#d7b889")
-                    if value == 0:
-                        wee.fillcolor("#e5c29f")
-                elif settings_list[0] == "rainbow":
-                    wee.fillcolor("black")
-                elif settings_list[0] == "microsoft":
-                    wee.fillcolor(colors_list[0])
-                wee.begin_fill()
-                if settings_list[0] == "rainbow":
-                    wee.pencolor("white")
-                if settings_list[2] == "connected":
+        def Fill_Square_Old():
+            if continue_working == True:
+                if -1 < colors_list.index(color) < 9:
+                    if settings_list[0] == "new" or settings_list[0] == "old":
+                        if value == 1:
+                            wee.fillcolor("#d7b889")
+                        if value == 0:
+                            wee.fillcolor("#e5c29f")
+                    elif settings_list[0] == "rainbow":
+                        wee.fillcolor("black")
+                    elif settings_list[0] == "microsoft":
+                        wee.fillcolor(colors_list[0])
+                    wee.begin_fill()
+                    if settings_list[0] == "rainbow":
+                        wee.pencolor("white")
                     if Convert_to_Square_ID(x, y - 1) != "null":
                         if Dig_List[Convert_to_Square_ID(x, y - 1)] == "dug":
                             if settings_list[0] == "new" or settings_list[0] == "old":
@@ -558,12 +557,11 @@ def Play():
                                 wee.pencolor(colors_list[0])
                             elif settings_list[0] == "rainbow":
                                 wee.pencolor("black")
-                wee.forward(Square_SizeG)
-                wee.pencolor("black")
-                if settings_list[0] == "rainbow":
-                    wee.pencolor("white")
-                wee.left(90)
-                if settings_list[2] == "connected":
+                    wee.forward(Square_SizeG)
+                    wee.pencolor("black")
+                    if settings_list[0] == "rainbow":
+                        wee.pencolor("white")
+                    wee.left(90)
                     if Convert_to_Square_ID(x + 1, y) != "null":
                         if Dig_List[Convert_to_Square_ID(x + 1, y)] == "dug":
                             if settings_list[0] == "new" or settings_list[0] == "old":
@@ -575,12 +573,11 @@ def Play():
                                 wee.pencolor(colors_list[0])
                             elif settings_list[0] == "rainbow":
                                 wee.pencolor("black")
-                wee.forward(Square_SizeG)
-                wee.pencolor("black")
-                if settings_list[0] == "rainbow":
-                    wee.pencolor("white")
-                wee.left(90)
-                if settings_list[2] == "connected":
+                    wee.forward(Square_SizeG)
+                    wee.pencolor("black")
+                    if settings_list[0] == "rainbow":
+                        wee.pencolor("white")
+                    wee.left(90)
                     if Convert_to_Square_ID(x, y + 1) != "null":
                         if Dig_List[Convert_to_Square_ID(x, y + 1)] == "dug":
                             if settings_list[0] == "new" or settings_list[0] == "old":
@@ -592,12 +589,11 @@ def Play():
                                 wee.pencolor(colors_list[0])
                             elif settings_list[0] == "rainbow":
                                 wee.pencolor("black")
-                wee.forward(Square_SizeG)
-                wee.pencolor("black")
-                if settings_list[0] == "rainbow":
-                    wee.pencolor("white")
-                wee.left(90)
-                if settings_list[2] == "connected":
+                    wee.forward(Square_SizeG)
+                    wee.pencolor("black")
+                    if settings_list[0] == "rainbow":
+                        wee.pencolor("white")
+                    wee.left(90)
                     if Convert_to_Square_ID(x - 1, y) != "null":
                         if Dig_List[Convert_to_Square_ID(x - 1, y)] == "dug":
                             if settings_list[0] == "new" or settings_list[0] == "old":
@@ -609,154 +605,410 @@ def Play():
                                 wee.pencolor(colors_list[0])
                             elif settings_list[0] == "rainbow":
                                 wee.pencolor("black")
-                wee.forward(Square_SizeG)
-                wee.pencolor("black")
-                if settings_list[0] == "rainbow":
-                    wee.pencolor("white")
-                wee.left(90)
-                wee.end_fill()
-                wee.penup()
-                wee.forward(Square_SizeG / 2)
-                wee.left(90)
-                wee.forward(Square_SizeG / 10)
-                wee.pencolor(color)
-                if continue_working == True:
-                    if Grid_Width > 10 or Grid_Height > 8:
-                        wee.write(str(colors_list.index(color)), align = "center", font = ("Sans Serif", int(Square_SizeG / 2), "bold"))
+                    wee.forward(Square_SizeG)
+                    wee.pencolor("black")
+                    if settings_list[0] == "rainbow":
+                        wee.pencolor("white")
+                    wee.left(90)
+                    wee.end_fill()
+                    wee.penup()
+                    wee.forward(Square_SizeG / 2)
+                    wee.left(90)
+                    wee.forward(Square_SizeG / 10)
+                    wee.pencolor(color)
+                    if continue_working == True and colors_list.index(color) != 0:
+                        if Grid_Width > 10 or Grid_Height > 8:
+                            wee.write(str(colors_list.index(color)), align = "center", font = ("Sans Serif", int(Square_SizeG / 2), "bold"))
+                        else:
+                            wee.write(str(colors_list.index(color)), align = "center", font = ("Sans Serif", int(Square_SizeG / 2), "normal"))
+                    wee.backward(Square_SizeG / 10)
+                    wee.right(90)
+                    wee.backward(Square_SizeG / 2)
+                    wee.pendown()
+                    wee.pencolor("black")
+
+                elif colors_list.index(color) == 9:
+                    wee.pencolor("black")
+                    if settings_list[0] != "rainbow":
+                        wee.fillcolor("black")
+                    elif settings_list[0] == "rainbow":
+                        wee.fillcolor("sky blue")
+                    wee.begin_fill()
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.end_fill()
+                elif colors_list.index(color) == 10:
+                    if settings_list[0] == "rainbow":
+                        wee.pencolor("white")
+                    wee.fillcolor(colors_list[10])
+                    wee.begin_fill()
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.end_fill()
+                elif colors_list.index(color) == 11:
+                    wee.pencolor("black")
+                    wee.fillcolor("white")
+                    wee.begin_fill()
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.end_fill()
+
+        def Fill_Square_Unconnected():
+            if continue_working == True:
+                if -1 < colors_list.index(color) < 9:
+                    if settings_list[0] == "new" or settings_list[0] == "old":
+                        if value == 1:
+                            wee.fillcolor("#d7b889")
+                        if value == 0:
+                            wee.fillcolor("#e5c29f")
+                    elif settings_list[0] == "rainbow":
+                        wee.fillcolor("black")
+                    elif settings_list[0] == "microsoft":
+                        wee.fillcolor(colors_list[0])
+                    if settings_list[0] == "rainbow":
+                        wee.pencolor("white")
                     else:
-                        wee.write(str(colors_list.index(color)), align = "center", font = ("Sans Serif", int(Square_SizeG / 2), "normal"))
-                wee.pencolor("black")
-                wee.backward(Square_SizeG / 10)
-                if settings_list[0] == "rainbow":
-                    wee.pencolor("white")
-                wee.right(90)
-                wee.backward(Square_SizeG / 2)
-                wee.pencolor("black")
-            elif colors_list.index(color) == 0:
-                if settings_list[0] == "new" or settings_list[0] == "old":
-                    if value == 1:
-                        wee.fillcolor("#d7b889")
-                    if value == 0:
-                        wee.fillcolor("#e5c29f")
-                elif settings_list[0] == "rainbow":
+                        wee.pencolor("black")
+                    wee.begin_fill()
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.end_fill()
+                    wee.penup()
+                    wee.forward(Square_SizeG / 2)
+                    wee.left(90)
+                    wee.forward(Square_SizeG / 10)
+                    wee.pencolor(color)
+                    if continue_working == True and colors_list.index(color) != 0:
+                        if Grid_Width > 10 or Grid_Height > 8:
+                            wee.write(str(colors_list.index(color)), align = "center", font = ("Sans Serif", int(Square_SizeG / 2), "bold"))
+                        else:
+                            wee.write(str(colors_list.index(color)), align = "center", font = ("Sans Serif", int(Square_SizeG / 2), "normal"))
+                    wee.backward(Square_SizeG / 10)
+                    wee.right(90)
+                    wee.backward(Square_SizeG / 2)
+                    wee.pendown()
+                    wee.pencolor("black")
+                elif colors_list.index(color) == 9:
+                    if settings_list[0] != "rainbow":
+                        wee.pencolor("black")
+                        wee.fillcolor("black")
+                    elif settings_list[0] == "rainbow":
+                        wee.pencolor("white")
+                        wee.fillcolor("sky blue")
+                    wee.begin_fill()
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.end_fill()
+                elif colors_list.index(color) == 10:
+                    if settings_list[0] == "rainbow":
+                        wee.pencolor("white")
+                    wee.fillcolor(colors_list[10])
+                    wee.begin_fill()
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.end_fill()
+                elif colors_list.index(color) == 11:
+                    if settings_list[0] != "rainbow":
+                        wee.pencolor("black")
+                    else:
+                        wee.pencolor("white")
+                    wee.fillcolor("white")
+                    wee.begin_fill()
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.end_fill()
+
+        def Fill_Square_Regular():
+            if continue_working == True:
+                if -1 < colors_list.index(color) < 9:
+                    if settings_list[0] == "new" or settings_list[0] == "old":
+                        if value == 1:
+                            wee.fillcolor("#d7b889")
+                        if value == 0:
+                            wee.fillcolor("#e5c29f")
+                    elif settings_list[0] == "microsoft":
+                        wee.fillcolor(colors_list[0])
+                    wee.begin_fill()
+                    sides_Checked = 0
+                    Cx = 0
+                    Cy = -1
+                    Black_List = []
+                    while sides_Checked < 4:
+                        if Convert_to_Square_ID(x + Cx, y + Cy) != "null":
+                            if Dig_List[Convert_to_Square_ID(x + Cx, y + Cy)] == "dug":
+                                if settings_list[0] == "new" or settings_list[0] == "old":
+                                    if value == 1:
+                                        wee.pencolor("#e5c29f")
+                                    elif value == 0:
+                                        wee.pencolor("#d7b889")
+                                elif settings_list[0] == "microsoft":
+                                    wee.pencolor(colors_list[0])
+                            else:
+                                wee.pencolor("white")
+                                Black_List.append(str(Cx) + str(Cy))
+                        else:
+                            wee.pencolor("white")
+                            Black_List.append(str(Cx) + str(Cy))
+                        wee.forward(Square_SizeG)
+                        wee.left(90)
+                        if Cy == -1:
+                            Cy = 0
+                            Cx = 1
+                        elif Cx == 1:
+                            Cy = 1
+                            Cx = 0
+                        elif Cy == 1:
+                            Cy = 0
+                            Cx = -1
+                        sides_Checked = sides_Checked + 1
+                    else:
+                        while sides_Checked < 4:
+                            wee.forward(Square_SizeG)
+                            wee.left(90)
+                            sides_Checked = sides_Checked + 1
+                    wee.end_fill()
+                    wee_coordsF = Map_Wee(x ,y)
+                    wee.pencolor("black")
+                    wee.penup()
+                    while len(Black_List) > 0:
+                        if Black_List[0] == "0-1":
+                            wee.goto(wee_coordsF[0],wee_coordsF[1])
+                            wee.pendown()
+                            wee.seth(0)
+                        if Black_List[0] == "10":
+                            wee.goto(wee_coordsF[0] + Square_SizeG,wee_coordsF[1])
+                            wee.pendown()
+                            wee.seth(90)
+                        if Black_List[0] == "01":
+                            wee.goto(wee_coordsF[0] + Square_SizeG,wee_coordsF[1] + Square_SizeG)
+                            wee.pendown()
+                            wee.seth(180)
+                        if Black_List[0] == "-10":
+                            wee.goto(wee_coordsF[0],wee_coordsF[1] + Square_SizeG)
+                            wee.pendown()
+                            wee.seth(270)
+                        wee.forward(Square_SizeG)
+                        wee.penup()
+                        Black_List.pop(0)
+                    wee.goto(wee_coordsF[0],wee_coordsF[1])
+                    wee.seth(0)
+                    wee.penup()
+                    wee.forward(Square_SizeG / 2)
+                    wee.left(90)
+                    wee.forward(Square_SizeG / 10)
+                    wee.pencolor(color)
+                    if continue_working == True and colors_list.index(color) != 0:
+                        if Grid_Width > 10 or Grid_Height > 8:
+                            wee.write(str(colors_list.index(color)), align = "center", font = ("Sans Serif", int(Square_SizeG / 2), "bold"))
+                        else:
+                            wee.write(str(colors_list.index(color)), align = "center", font = ("Sans Serif", int(Square_SizeG / 2), "normal"))
+                    wee.backward(Square_SizeG / 10)
+                    wee.right(90)
+                    wee.backward(Square_SizeG / 2)
+                    wee.pendown()
+                    wee.pencolor("black")
+                elif colors_list.index(color) == 9:
+                    wee.pencolor("black")
                     wee.fillcolor("black")
-                elif settings_list[0] == "microsoft":
-                    wee.fillcolor(colors_list[0])
-                wee.begin_fill()
-                if settings_list[0] == "rainbow":
+                    wee.begin_fill()
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.end_fill()
+                elif colors_list.index(color) == 10:
+                    wee.fillcolor(colors_list[10])
+                    wee.begin_fill()
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.end_fill()
+                elif colors_list.index(color) == 11:
+                    wee.pencolor("black")
+                    wee.fillcolor("white")
+                    wee.begin_fill()
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.end_fill()
+
+        def Fill_Square_Rainbow():
+            if continue_working == True:
+                if -1 < colors_list.index(color) < 9:
                     wee.pencolor("white")
-                if settings_list[2] == "connected":
-                    if Convert_to_Square_ID(x, y - 1) != "null":
-                        if Dig_List[Convert_to_Square_ID(x, y - 1)] == "dug":
-                            if settings_list[0] == "new" or settings_list[0] == "old":
-                                if value == 1:
-                                    wee.pencolor("#e5c29f")
-                                elif value == 0:
-                                    wee.pencolor("#d7b889")
-                            elif settings_list[0] == "microsoft":
-                                wee.pencolor(colors_list[0])
-                            elif settings_list[0] == "rainbow":
-                                wee.pencolor("black")
-                wee.forward(Square_SizeG)
-                wee.pencolor("black")
-                if settings_list[0] == "rainbow":
-                    wee.pencolor("white")
-                wee.left(90)
-                if settings_list[2] == "connected":
-                    if Convert_to_Square_ID(x + 1, y) != "null":
-                        if Dig_List[Convert_to_Square_ID(x + 1, y)] == "dug":
-                            if settings_list[0] == "new" or settings_list[0] == "old":
-                                if value == 1:
-                                    wee.pencolor("#d7b889")
-                                elif value == 0:
-                                    wee.pencolor("#e5c29f")
-                            elif settings_list[0] == "microsoft":
-                                wee.pencolor(colors_list[0])
-                            elif settings_list[0] == "rainbow":
-                                wee.pencolor("black")
-                wee.forward(Square_SizeG)
-                wee.pencolor("black")
-                if settings_list[0] == "rainbow":
-                    wee.pencolor("white")
-                wee.left(90)
-                if settings_list[2] == "connected":
-                    if Convert_to_Square_ID(x, y + 1) != "null":
-                        if Dig_List[Convert_to_Square_ID(x, y + 1)] == "dug":
-                            if settings_list[0] == "new" or settings_list[0] == "old":
-                                if value == 1:
-                                    wee.pencolor("#d7b889")
-                                elif value == 0:
-                                    wee.pencolor("#e5c29f")
-                            elif settings_list[0] == "microsoft":
-                                wee.pencolor(colors_list[0])
-                            elif settings_list[0] == "rainbow":
-                                wee.pencolor("black")
-                wee.forward(Square_SizeG)
-                wee.pencolor("black")
-                if settings_list[0] == "rainbow":
-                    wee.pencolor("white")
-                wee.left(90)
-                if settings_list[2] == "connected":
-                    if Convert_to_Square_ID(x - 1, y) != "null":
-                        if Dig_List[Convert_to_Square_ID(x - 1, y)] == "dug":
-                            if settings_list[0] == "new" or settings_list[0] == "old":
-                                if value == 1:
-                                    wee.pencolor("#e5c29f")
-                                elif value == 0:
-                                    wee.pencolor("#d7b889")
-                            elif settings_list[0] == "microsoft":
-                                wee.pencolor(colors_list[0])
-                            elif settings_list[0] == "rainbow":
-                                wee.pencolor("black")
-                wee.forward(Square_SizeG)
-                wee.pencolor("black")
-                if settings_list[0] == "rainbow":
-                    wee.pencolor("white")
-                wee.left(90)
-                wee.end_fill()
-            elif colors_list.index(color) == 9:
-                wee.pencolor("black")
-                if settings_list[0] != "rainbow":
                     wee.fillcolor("black")
-                elif settings_list[0] == "rainbow":
+                    wee.begin_fill()
+                    sides_Checked = 0
+                    Cx = 0
+                    Cy = -1
+                    Black_List = []
+                    while sides_Checked < 4:
+                        if Convert_to_Square_ID(x + Cx, y + Cy) != "null":
+                            if Dig_List[Convert_to_Square_ID(x + Cx, y + Cy)] == "dug":
+                                wee.pencolor("black")
+                            else:
+                                wee.pencolor("white")
+                                Black_List.append(str(Cx) + str(Cy))
+                        else:
+                            wee.pencolor("white")
+                            Black_List.append(str(Cx) + str(Cy))
+                        wee.forward(Square_SizeG)
+                        wee.left(90)
+                        if Cy == -1:
+                            Cy = 0
+                            Cx = 1
+                        elif Cx == 1:
+                            Cy = 1
+                            Cx = 0
+                        elif Cy == 1:
+                            Cy = 0
+                            Cx = -1
+                        sides_Checked = sides_Checked + 1
+                    wee.end_fill()
+                    wee_coordsF = Map_Wee(x ,y)
+                    wee.pencolor("white")
+                    wee.penup()
+                    while len(Black_List) > 0:
+                        if Black_List[0] == "0-1":
+                            wee.goto(wee_coordsF[0],wee_coordsF[1])
+                            wee.pendown()
+                            wee.seth(0)
+                        if Black_List[0] == "10":
+                            wee.goto(wee_coordsF[0] + Square_SizeG,wee_coordsF[1])
+                            wee.pendown()
+                            wee.seth(90)
+                        if Black_List[0] == "01":
+                            wee.goto(wee_coordsF[0] + Square_SizeG,wee_coordsF[1] + Square_SizeG)
+                            wee.pendown()
+                            wee.seth(180)
+                        if Black_List[0] == "-10":
+                            wee.goto(wee_coordsF[0],wee_coordsF[1] + Square_SizeG)
+                            wee.pendown()
+                            wee.seth(270)
+                        wee.forward(Square_SizeG)
+                        wee.penup()
+                        Black_List.pop(0)
+                    wee.goto(wee_coordsF[0],wee_coordsF[1])
+                    wee.seth(0)
+                    wee.penup()
+                    wee.forward(Square_SizeG / 2)
+                    wee.left(90)
+                    wee.forward(Square_SizeG / 10)
+                    wee.pencolor(color)
+                    if continue_working == True and colors_list.index(color) != 0:
+                        if Grid_Width > 10 or Grid_Height > 8:
+                            wee.write(str(colors_list.index(color)), align = "center", font = ("Sans Serif", int(Square_SizeG / 2), "bold"))
+                        else:
+                            wee.write(str(colors_list.index(color)), align = "center", font = ("Sans Serif", int(Square_SizeG / 2), "normal"))
+                    wee.backward(Square_SizeG / 10)
+                    wee.right(90)
+                    wee.backward(Square_SizeG / 2)
+                    wee.pendown()
+                elif colors_list.index(color) == 9:
+                    wee.pencolor("white")
                     wee.fillcolor("sky blue")
-                wee.begin_fill()
-                wee.forward(Square_SizeG)
-                wee.left(90)
-                wee.forward(Square_SizeG)
-                wee.left(90)
-                wee.forward(Square_SizeG)
-                wee.left(90)
-                wee.forward(Square_SizeG)
-                wee.left(90)
-                wee.end_fill()
-            elif colors_list.index(color) == 10:
-                if settings_list[0] == "rainbow":
+                    wee.begin_fill()
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.end_fill()
+                elif colors_list.index(color) == 10:
                     wee.pencolor("white")
-                wee.fillcolor(colors_list[10])
-                wee.begin_fill()
-                wee.forward(Square_SizeG)
-                wee.left(90)
-                wee.forward(Square_SizeG)
-                wee.left(90)
-                wee.forward(Square_SizeG)
-                wee.left(90)
-                wee.forward(Square_SizeG)
-                wee.left(90)
-                wee.end_fill()
-            elif colors_list.index(color) == 11:
-                wee.pencolor("black")
-                wee.fillcolor("white")
-                wee.begin_fill()
-                wee.forward(Square_SizeG)
-                wee.left(90)
-                wee.forward(Square_SizeG)
-                wee.left(90)
-                wee.forward(Square_SizeG)
-                wee.left(90)
-                wee.forward(Square_SizeG)
-                wee.left(90)
-                wee.end_fill()
+                    wee.fillcolor(colors_list[10])
+                    wee.begin_fill()
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.end_fill()
+                elif colors_list.index(color) == 11:
+                    wee.pencolor("white")
+                    wee.fillcolor("white")
+                    wee.begin_fill()
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.forward(Square_SizeG)
+                    wee.left(90)
+                    wee.end_fill()
+
+        if settings_list[2] == "new":
+            if settings_list[0] == "new" or "old" or "microsoft":
+                Fill_Square_Regular()
+            if settings_list[0] == "rainbow":
+                Fill_Square_Rainbow()
+        elif settings_list[2] == "old":
+            Fill_Square_Old()
+        elif settings_list[2] == "off":
+            Fill_Square_Unconnected()
 
     # Main Loop for keyboard inputs
     if settings_list[3] == "off":
@@ -1426,6 +1678,7 @@ while Game_Exit == False:
             global Draw_Menu
             global continue_working
             global Exit_Once
+            global show_win_message
             if -100 < x < 100:
                 if 90 < y < 130:
                     Main_Input = "1"
@@ -1447,13 +1700,16 @@ while Game_Exit == False:
                         Difficulty_Choose = False
                         continue_working = True
                         Exit_Once = False
+                        show_win_message = True
                         Play()
                         Played_Once = True
                         if Would_Play_Again == 1:
                             Has_Player_WonG = 0
+                            show_win_message = True
                             Game_Over = False
                         elif Would_Play_Again == 2:
                             Has_Player_WonG = 0
+                            show_win_message = True
                             Game_Over = False
                             Game_Finished = True
                             Draw_Menu = False
