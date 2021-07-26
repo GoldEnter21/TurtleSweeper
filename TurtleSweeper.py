@@ -746,19 +746,71 @@ def Play():
                 elif colors_list.index(color) == 11:
                     if settings_list[0] != "rainbow":
                         wee.pencolor("black")
+                        wee.begin_fill()
+                        wee.forward(Square_SizeG)
+                        wee.left(90)
+                        wee.forward(Square_SizeG)
+                        wee.left(90)
+                        wee.forward(Square_SizeG)
+                        wee.left(90)
+                        wee.forward(Square_SizeG)
+                        wee.left(90)
+                        wee.end_fill()
                     else:
                         wee.pencolor("white")
-                    wee.fillcolor("white")
-                    wee.begin_fill()
-                    wee.forward(Square_SizeG)
-                    wee.left(90)
-                    wee.forward(Square_SizeG)
-                    wee.left(90)
-                    wee.forward(Square_SizeG)
-                    wee.left(90)
-                    wee.forward(Square_SizeG)
-                    wee.left(90)
-                    wee.end_fill()
+                        wee.fillcolor("white")
+                        wee.begin_fill()
+                        sides_Checked = 0
+                        Cx = 0
+                        Cy = -1
+                        Black_List = []
+                        while sides_Checked < 4:
+                            if Convert_to_Square_ID(x + Cx, y + Cy) != "null":
+                                if Dig_List[Convert_to_Square_ID(x + Cx, y + Cy)] == "dug" or Flag_List[Convert_to_Square_ID(x + Cx, y + Cy)] == 1:
+                                    wee.pencolor("white")
+                                    Black_List.append(str(Cx) + str(Cy))
+                                else:
+                                    wee.pencolor("black")
+                            else:
+                                wee.pencolor("black")
+                            wee.forward(Square_SizeG)
+                            wee.left(90)
+                            if Cy == -1:
+                                Cy = 0
+                                Cx = 1
+                            elif Cx == 1:
+                                Cy = 1
+                                Cx = 0
+                            elif Cy == 1:
+                                Cy = 0
+                                Cx = -1
+                            sides_Checked = sides_Checked + 1
+                        wee.end_fill()
+                        wee_coordsF = Map_Wee(x ,y)
+                        wee.pencolor("white")
+                        wee.penup()
+                        while len(Black_List) > 0:
+                            if Black_List[0] == "0-1":
+                                wee.goto(wee_coordsF[0],wee_coordsF[1])
+                                wee.pendown()
+                                wee.seth(0)
+                            if Black_List[0] == "10":
+                                wee.goto(wee_coordsF[0] + Square_SizeG,wee_coordsF[1])
+                                wee.pendown()
+                                wee.seth(90)
+                            if Black_List[0] == "01":
+                                wee.goto(wee_coordsF[0] + Square_SizeG,wee_coordsF[1] + Square_SizeG)
+                                wee.pendown()
+                                wee.seth(180)
+                            if Black_List[0] == "-10":
+                                wee.goto(wee_coordsF[0],wee_coordsF[1] + Square_SizeG)
+                                wee.pendown()
+                                wee.seth(270)
+                            wee.forward(Square_SizeG)
+                            wee.penup()
+                            Black_List.pop(0)
+                        wee.goto(wee_coordsF[0],wee_coordsF[1])
+                        wee.seth(0)
 
         def Fill_Square_Regular():
             if continue_working == True:
@@ -803,11 +855,6 @@ def Play():
                             Cy = 0
                             Cx = -1
                         sides_Checked = sides_Checked + 1
-                    else:
-                        while sides_Checked < 4:
-                            wee.forward(Square_SizeG)
-                            wee.left(90)
-                            sides_Checked = sides_Checked + 1
                     wee.end_fill()
                     wee_coordsF = Map_Wee(x ,y)
                     wee.pencolor("black")
@@ -990,20 +1037,62 @@ def Play():
                     wee.pencolor("white")
                     wee.fillcolor("white")
                     wee.begin_fill()
-                    wee.forward(Square_SizeG)
-                    wee.left(90)
-                    wee.forward(Square_SizeG)
-                    wee.left(90)
-                    wee.forward(Square_SizeG)
-                    wee.left(90)
-                    wee.forward(Square_SizeG)
-                    wee.left(90)
+                    sides_Checked = 0
+                    Cx = 0
+                    Cy = -1
+                    Black_List = []
+                    while sides_Checked < 4:
+                        if Convert_to_Square_ID(x + Cx, y + Cy) != "null":
+                            if Dig_List[Convert_to_Square_ID(x + Cx, y + Cy)] == "dug" or Flag_List[Convert_to_Square_ID(x + Cx, y + Cy)] == 1:
+                                wee.pencolor("white")
+                                Black_List.append(str(Cx) + str(Cy))
+                            else:
+                                wee.pencolor("black")
+                        else:
+                            wee.pencolor("black")
+                        wee.forward(Square_SizeG)
+                        wee.left(90)
+                        if Cy == -1:
+                            Cy = 0
+                            Cx = 1
+                        elif Cx == 1:
+                            Cy = 1
+                            Cx = 0
+                        elif Cy == 1:
+                            Cy = 0
+                            Cx = -1
+                        sides_Checked = sides_Checked + 1
                     wee.end_fill()
+                    wee_coordsF = Map_Wee(x ,y)
+                    wee.pencolor("white")
+                    wee.penup()
+                    while len(Black_List) > 0:
+                        if Black_List[0] == "0-1":
+                            wee.goto(wee_coordsF[0],wee_coordsF[1])
+                            wee.pendown()
+                            wee.seth(0)
+                        if Black_List[0] == "10":
+                            wee.goto(wee_coordsF[0] + Square_SizeG,wee_coordsF[1])
+                            wee.pendown()
+                            wee.seth(90)
+                        if Black_List[0] == "01":
+                            wee.goto(wee_coordsF[0] + Square_SizeG,wee_coordsF[1] + Square_SizeG)
+                            wee.pendown()
+                            wee.seth(180)
+                        if Black_List[0] == "-10":
+                            wee.goto(wee_coordsF[0],wee_coordsF[1] + Square_SizeG)
+                            wee.pendown()
+                            wee.seth(270)
+                        wee.forward(Square_SizeG)
+                        wee.penup()
+                        Black_List.pop(0)
+                    wee.goto(wee_coordsF[0],wee_coordsF[1])
+                    wee.seth(0)
 
         if settings_list[2] == "new":
-            if settings_list[0] == "new" or "old" or "microsoft":
+            if settings_list[0] == "new" or settings_list[0] == "old" or settings_list[0] == "microsoft":
                 Fill_Square_Regular()
-            if settings_list[0] == "rainbow":
+            elif settings_list[0] == "rainbow":
                 Fill_Square_Rainbow()
         elif settings_list[2] == "old":
             Fill_Square_Old()
@@ -1040,7 +1129,7 @@ def Play():
                                 wee.penup()
                                 wee.goto(wee_coords[0], wee_coords[1])
                                 wee.pendown()
-                                Fill_Square(colors_list[10], "bruh", "bruhh", "bruhhh")
+                                Fill_Square(colors_list[10], "bruh", XcOd, YcOd)
                                 Flag_List[Convert_to_Square_ID(XcOd, YcOd)] = 1
                             elif Flag_List[Convert_to_Square_ID(XcOd, YcOd)] == "dug":
                                 print("You cannot flag an already dug space!")
@@ -1058,7 +1147,7 @@ def Play():
                                 wee.penup()
                                 wee.goto(wee_coords[0], wee_coords[1])
                                 wee.pendown()
-                                Fill_Square("white", "bruh", "bruhh", "bruhhh")
+                                Fill_Square("white", "bruh", XcOd, YcOd)
                                 Flag_List[Convert_to_Square_ID(XcOd, YcOd)] = 0
                             elif Flag_List[Convert_to_Square_ID(XcOd, YcOd)] == "dug" or Flag_List[Convert_to_Square_ID(XcOd, YcOd)] == 0:
                                 print("That space is already unflagged!")
@@ -1344,7 +1433,7 @@ def Play():
                                     wee.penup()
                                     wee.goto(wee_coords[0], wee_coords[1])
                                     wee.pendown()
-                                    Fill_Square(colors_list[10], "bruh", "bruhh", "bruhhh")
+                                    Fill_Square(colors_list[10], "bruh", XcOd, YcOd)
                                     Flag_List[Convert_to_Square_ID(XcOd, YcOd)] = 1
                                     turtle_drawing = False
                         elif User_Input_list[0] == "u":
@@ -1358,7 +1447,7 @@ def Play():
                                     wee.penup()
                                     wee.goto(wee_coords[0], wee_coords[1])
                                     wee.pendown()
-                                    Fill_Square("white", "bruh", "bruhh", "bruhhh")
+                                    Fill_Square("white", "bruh", XcOd, YcOd)
                                     Flag_List[Convert_to_Square_ID(XcOd, YcOd)] = 0
                                     turtle_drawing = False
             else: pass
