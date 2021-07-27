@@ -2,8 +2,8 @@ import turtle
 import random
 import math
 
-settings_list = ["new", "shown", "new", "on"]
-settings_list2 = ["Color Theme:", "Drawing Turtle:", "Grid Textures:", "Mouse Controls:"]
+settings_list = ["rainbow", "shown", "off", "on", "fixed"]
+settings_list2 = ["Color Theme:", "Drawing Turtle:", "Grid Textures:", "Mouse Controls:", "# of Bombs:"]
 
 if settings_list[3] == "off":
     print("TurtleSweeper - v.1.4")
@@ -56,20 +56,20 @@ def Play():
 
         CreateBox(-100, 75)
         wheat.penup()
-        wheat.goto(0,45)
-        wheat.write("EASY", align="center", font=("Handlee", 12, "normal"))
+        wheat.goto(0,43)
+        wheat.write("EASY", align="center", font=("Baloo Chettan 2", 12, "normal"))
         CreateBox(-100, 20)
         wheat.penup()
-        wheat.goto(0,-10)
-        wheat.write("MEDIUM", align="center", font=("Handlee", 12, "normal"))
+        wheat.goto(0,-12)
+        wheat.write("MEDIUM", align="center", font=("Baloo Chettan 2", 12, "normal"))
         CreateBox(-100, -35)
         wheat.penup()
-        wheat.goto(0,-65)
-        wheat.write("HARD", align="center", font=("Handlee", 12, "normal"))
+        wheat.goto(0,-67)
+        wheat.write("HARD", align="center", font=("Baloo Chettan 2", 12, "normal"))
 
         wheat.penup()
         wheat.goto(0, 205)
-        wheat.write("CHOOSE A DIFFICULTY:", align="center", font=("Handlee", 30, "bold"))
+        wheat.write("CHOOSE A DIFFICULTY:", align="center", font=("Baloo Chettan 2", 30, "bold"))
 
     def Check_If_Valid_Input3(Input):
         Valid_Input = 0
@@ -145,6 +145,8 @@ def Play():
 
     turtle.TurtleScreen._RUNNING = True
 
+    turtle.setup(720, 675)
+
     # The turtle that does all the work
     wee = turtle.Turtle()
     wee.shape("turtle")
@@ -213,6 +215,8 @@ def Play():
             "white"
         ]
 
+    # Literally a list of numbers counting to the max bombs (used for pseudorandom sampling)
+    Nums_List = []
     # List of bombs and numbers (for non-bomb tiles)
     Box_List = []
     # List of bombs and dug/undug tiles
@@ -338,15 +342,27 @@ def Play():
 
     # Plants Bombs to Box_List
     def Create_Game():
-        num_Box_List = 0
-        while num_Box_List < Max_Squares:
-            NextAppend = random.random()
-            if NextAppend > Bomb_Probability:
-                TheAppend = 0
-            if NextAppend <= Bomb_Probability:
-                TheAppend = "bomb"
-            Box_List.append(TheAppend)
-            num_Box_List = num_Box_List + 1
+        if settings_list[4] == "random":
+            num_Box_List = 0
+            while num_Box_List < Max_Squares:
+                NextAppend = random.random()
+                if NextAppend > Bomb_Probability:
+                    TheAppend = 0
+                if NextAppend <= Bomb_Probability:
+                    TheAppend = "bomb"
+                Box_List.append(TheAppend)
+                num_Box_List = num_Box_List + 1
+        elif settings_list[4] == "fixed":
+            num_Bomb = round((0.000210883 * (Max_Squares ** 2)) + (0.104405 * Max_Squares) + 0.297919)
+            num_Box_List = 0
+            while num_Box_List < Max_Squares:
+                Nums_List.append(num_Box_List)
+                Box_List.append(0)
+                num_Box_List = num_Box_List + 1
+            Bomb_List = random.sample(Nums_List, num_Bomb)
+            while len(Bomb_List) > 0:
+                Box_List[Bomb_List[0]] = "bomb"
+                Bomb_List.pop(0)
 
     Create_Game()
 
@@ -1269,9 +1285,9 @@ def Play():
 
             weed.penup()
             weed.goto(0,40)
-            weed.write("WOULD YOU LIKE", align="center", font=("Handlee", 18, "normal"))
+            weed.write("WOULD YOU LIKE", align="center", font=("Baloo Chettan 2", 18, "normal"))
             weed.goto(0,5)
-            weed.write("TO PLAY AGAIN?", align="center", font=("Handlee", 18, "normal"))
+            weed.write("TO PLAY AGAIN?", align="center", font=("Baloo Chettan 2", 18, "normal"))
             weed.goto(-116,-25)
             weed.pendown()
             weed.left(90)
@@ -1285,7 +1301,7 @@ def Play():
             weed.penup()
             weed.goto(-67,-60)
             weed.pencolor("green")
-            weed.write("YES", align="center", font=("Handlee", 12, "normal"))
+            weed.write("YES", align="center", font=("Baloo Chettan 2", 12, "normal"))
             weed.goto(17,-25)
             weed.pendown()
             weed.pencolor("black")
@@ -1300,7 +1316,7 @@ def Play():
             weed.penup()
             weed.goto(67,-60)
             weed.pencolor("red")
-            weed.write("NO", align="center", font=("Handlee", 12, "normal"))
+            weed.write("NO", align="center", font=("Baloo Chettan 2", 12, "normal"))
 
         def TurtleClick(x, y):
             global Has_Player_WonG
@@ -1410,6 +1426,8 @@ def Play():
                 if Game_Over == False:
                     square_x = (x + ((Square_SizeG * Grid_Width) / 2)) / Square_SizeG + 1
                     square_y = (y + ((Square_SizeG * Grid_Height) / 2)) / Square_SizeG + 1
+                    testvar = int(square_x)
+                    testvar2 = int(square_y)
                     if Convert_to_Square_ID(int(square_x), int(square_y)) != "null":
                         if Flag_List[Convert_to_Square_ID(int(square_x), int(square_y))] == 0:
                             coordinate_list = ["f:" + str(int(square_x)), str(int(square_y))]
@@ -1471,7 +1489,7 @@ def Play():
             try:
                 turtle.onscreenclick(TurtleClick)
                 turtle.onscreenclick(TurtleClick2, btn= 3)
-                turtle.onkeypress(Exit, "e")
+                turtle.onkey(Exit, "e")
                 turtle.listen()
                 turtle.mainloop()
             except turtle.Terminator: break
@@ -1586,25 +1604,42 @@ def Settings():
             i = 0
             for i in range (num_settings):
                 wheel.goto(-200, 240 - setting_width * (i + 1))
-                wheel.write(settings_list2[i], align= "left", font= ("Handlee", 18, "normal"))
+                wheel.write(settings_list2[i], align= "left", font= ("Baloo Chettan 2", 18, "normal"))
                 wheel.goto(20, 240 - setting_width * (i + 1))
-                wheel.write("◀", align= "center", font= ("Handlee", 18, "normal"))
+                wheel.write("◀", align= "center", font= ("Baloo Chettan 2", 18, "normal"))
                 wheel.goto(105, 240 - setting_width * (i + 1))
-                wheel.write(settings_list[i], align= "center", font= ("Handlee", 18, "normal"))
+                wheel.write(settings_list[i], align= "center", font= ("Baloo Chettan 2", 18, "normal"))
                 wheel.goto(190, 240 - setting_width * (i + 1))
-                wheel.write("▶", align= "center", font= ("Handlee", 18, "normal"))
+                wheel.write("▶", align= "center", font= ("Baloo Chettan 2", 18, "normal"))
                 i = i + 1
-
-            wheel.showturtle()
-            wheel.goto(20 - 15, 240 - setting_width + 27)
-            wheel.pendown()
-            wheel.forward(30)
-            wheel.right(90)
-            wheel.forward(30)
-            wheel.right(90)
-            wheel.forward(30)
-            wheel.right(90)
-            wheel.forward(30)
+            i = 0
+            for i in range (num_settings):
+                wheel.goto(5, 240 - (setting_width * (i + 1)) + 31)
+                wheel.pendown()
+                wheel.forward(30)
+                wheel.right(90)
+                wheel.forward(30)
+                wheel.right(90)
+                wheel.forward(30)
+                wheel.right(90)
+                wheel.forward(30)
+                wheel.right(90)
+                wheel.penup()
+                i = i + 1
+            i = 0
+            for i in range (num_settings):
+                wheel.goto(173, 240 - (setting_width * (i + 1)) + 31)
+                wheel.pendown()
+                wheel.forward(30)
+                wheel.right(90)
+                wheel.forward(30)
+                wheel.right(90)
+                wheel.forward(30)
+                wheel.right(90)
+                wheel.forward(30)
+                wheel.right(90)
+                wheel.penup()
+                i = i + 1
 
         Settings_Screen()
 
@@ -1726,28 +1761,28 @@ def MainMenuScreen():
 
     CreateBox(-100, 130)
     wheat.penup()
-    wheat.goto(0,100)
-    wheat.write("PLAY", align="center", font=("Handlee", 12, "normal"))
+    wheat.goto(0,98)
+    wheat.write("PLAY", align="center", font=("Baloo Chettan 2", 12, "normal"))
     CreateBox(-100, 75)
     wheat.penup()
-    wheat.goto(0,45)
-    wheat.write("HELP", align="center", font=("Handlee", 12, "normal"))
+    wheat.goto(0,43)
+    wheat.write("HELP", align="center", font=("Baloo Chettan 2", 12, "normal"))
     CreateBox(-100, 20)
     wheat.penup()
-    wheat.goto(0,-10)
-    wheat.write("CREDITS", align="center", font=("Handlee", 12, "normal"))
+    wheat.goto(0,-12)
+    wheat.write("CREDITS", align="center", font=("Baloo Chettan 2", 12, "normal"))
     CreateBox(-100, -35)
     wheat.penup()
-    wheat.goto(0,-65)
-    wheat.write("SETTINGS", align="center", font=("Handlee", 12, "normal"))
+    wheat.goto(0,-67)
+    wheat.write("SETTINGS", align="center", font=("Baloo Chettan 2", 12, "normal"))
     CreateBox(-100, -90)
     wheat.penup()
-    wheat.goto(0,-120)
-    wheat.write("EXIT", align="center", font=("Handlee", 12, "normal"))
+    wheat.goto(0,-122)
+    wheat.write("EXIT", align="center", font=("Baloo Chettan 2", 12, "normal"))
 
     wheat.penup()
     wheat.goto(0, 205)
-    wheat.write("TURTLESWEEPER!", align="center", font=("Handlee", 30, "bold"))
+    wheat.write("TURTLESWEEPER!", align="center", font=("Baloo Chettan 2", 30, "bold"))
 
 # Main main loop
 Help_Needed_Main = 0
@@ -1826,6 +1861,8 @@ while Game_Exit == False:
         while Main_Menu_Exit == False:
             try:
                 if Draw_Menu == False:
+                    turtle.setup(720, 675)
+                    turtle.title("TurtleSweeper! - Version 1.4")
                     MainMenuScreen()
                     Draw_Menu = True
                 turtle.onscreenclick(GetCoords)
