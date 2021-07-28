@@ -2,13 +2,14 @@ import turtle
 import random
 import math
 
-settings_list = ["rainbow", "shown", "off", "on", "fixed"]
+settings_list = ["rainbow", "shown", "unconnected", "on", "fixed"]
 settings_list2 = ["Color Theme:", "Drawing Turtle:", "Grid Textures:", "Mouse Controls:", "# of Bombs:"]
-
-if settings_list[3] == "off":
-    print("TurtleSweeper - v.1.4")
-    print("Welcome to TurtleSweeper!")
-    First_Intro_Done = False
+Color_Theme_list = ["old", "new", "microsoft", "rainbow"]
+Drawing_Turtle_list = ["shown", "hidden"]
+Grid_Texture_list = ["connected (old)", "connected (new)", "unconnected"]
+Mouse_Control_list = ["on", "off"]
+Bomb_Number_list = ["fixed", "random"]
+settings_list_list = [Color_Theme_list, Drawing_Turtle_list, Grid_Texture_list, Mouse_Control_list, Bomb_Number_list]
 
 Has_Player_WonG = 0
 Game_Over = False
@@ -21,6 +22,11 @@ Difficulty_Choose = False
 Would_Play_Again = 0
 continue_working = True
 Exit_Once = False
+Draw_Settings_Menu = False
+num_settings = len(settings_list)
+setting_width = 480/(num_settings + 1)
+Settings_Exit = False
+First_Intro_Done = False
 
 def Play():
     global Has_Player_WonG
@@ -1105,14 +1111,14 @@ def Play():
                     wee.goto(wee_coordsF[0],wee_coordsF[1])
                     wee.seth(0)
 
-        if settings_list[2] == "new":
+        if settings_list[2] == "connected (new)":
             if settings_list[0] == "new" or settings_list[0] == "old" or settings_list[0] == "microsoft":
                 Fill_Square_Regular()
             elif settings_list[0] == "rainbow":
                 Fill_Square_Rainbow()
-        elif settings_list[2] == "old":
+        elif settings_list[2] == "connected (old)":
             Fill_Square_Old()
-        elif settings_list[2] == "off":
+        elif settings_list[2] == "unconnected":
             Fill_Square_Unconnected()
 
     # Main Loop for keyboard inputs
@@ -1228,8 +1234,7 @@ def Play():
                                         Fill_Square(colors_list[Box_List[Temp_Zero_List[0]]], odd_Or_even4, Temp_XY[0], Temp_XY[1])
                                         Dig_List[Temp_Zero_List[0]] = "dug"
                                         Flag_List[Temp_Zero_List[0]] = "dug"
-                                        Has_Player_WonG = Has_Player_WonG + 1
-                                        Has_Player_WonG = Has_Player_WonG + Check_Neighboring_Squares2(Temp_XY[0],Temp_XY[1])
+                                        Has_Player_WonG = Has_Player_WonG + 1 + Check_Neighboring_Squares2(Temp_XY[0],Temp_XY[1])
                                         Temp_Zero_List.pop(0)
                                 elif Box_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] == 1 or 2 or 3 or 4 or 5 or 6 or 7 or 8:
                                     wee_coords = Map_Wee(X_coordinate, Y_coordinate)
@@ -1370,7 +1375,7 @@ def Play():
                                     Fill_Square(colors_list[0], odd_Or_even3, X_coordinate, Y_coordinate)
                                     Dig_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] = "dug"
                                     Flag_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] = "dug"
-                                    Has_Player_WonG += 1 + Check_Neighboring_Squares2(X_coordinate, Y_coordinate)
+                                    Has_Player_WonG = Has_Player_WonG + 1 + Check_Neighboring_Squares2(X_coordinate, Y_coordinate)
                                     while len(Temp_Zero_List) > 0:
                                         if continue_working == False: break
                                         Temp_XY = Convert_to_Coordinates(Temp_Zero_List[0])
@@ -1382,8 +1387,7 @@ def Play():
                                         Fill_Square(colors_list[Box_List[Temp_Zero_List[0]]], odd_Or_even4, Temp_XY[0], Temp_XY[1])
                                         Dig_List[Temp_Zero_List[0]] = "dug"
                                         Flag_List[Temp_Zero_List[0]] = "dug"
-                                        Has_Player_WonG = Has_Player_WonG + 1
-                                        Has_Player_WonG = Has_Player_WonG + Check_Neighboring_Squares2(Temp_XY[0],Temp_XY[1])
+                                        Has_Player_WonG = Has_Player_WonG + 1 + Check_Neighboring_Squares2(Temp_XY[0],Temp_XY[1])
                                         Temp_Zero_List.pop(0)
                                     turtle_drawing = False
                                 elif Box_List[Convert_to_Square_ID(X_coordinate, Y_coordinate)] == 1 or 2 or 3 or 4 or 5 or 6 or 7 or 8:
@@ -1426,8 +1430,6 @@ def Play():
                 if Game_Over == False:
                     square_x = (x + ((Square_SizeG * Grid_Width) / 2)) / Square_SizeG + 1
                     square_y = (y + ((Square_SizeG * Grid_Height) / 2)) / Square_SizeG + 1
-                    testvar = int(square_x)
-                    testvar2 = int(square_y)
                     if Convert_to_Square_ID(int(square_x), int(square_y)) != "null":
                         if Flag_List[Convert_to_Square_ID(int(square_x), int(square_y))] == 0:
                             coordinate_list = ["f:" + str(int(square_x)), str(int(square_y))]
@@ -1522,7 +1524,6 @@ def Play():
                     turtle.clearscreen()
                 Exit_Game = True
 
-
 def Tutorial():
     Tutorial_Finished = False
     while Tutorial_Finished == False:
@@ -1580,161 +1581,217 @@ def Credits():
     read = input("Type anything here and press enter to continue: ")
     print("---------------------------------------------------------------------")
 
-def Settings():
-    if settings_list[3] == "on":
+def SettingsNew():
+    global Draw_Settings_Menu
 
-        turtle.TurtleScreen._RUNNING = True
+    turtle.TurtleScreen._RUNNING = True
 
-        def Settings_Screen():
+    wheel = turtle.Turtle()
+    wheel.hideturtle()
+    wheel.speed("fastest")
 
-            wheel = turtle.Turtle()
-            wheel.hideturtle()
-            wheel.speed("fastest")
-
-            wheel.penup()
-            wheel.goto(-230, 240)
-            wheel.pendown()
-            wheel.goto(230, 240)
-            wheel.goto(230, -240)
-            wheel.goto(-230, -240)
-            wheel.goto(-230, 240)
-            num_settings = len(settings_list)
-            setting_width = 480/(num_settings + 1)
-            wheel.penup()
-            i = 0
-            for i in range (num_settings):
-                wheel.goto(-200, 240 - setting_width * (i + 1))
-                wheel.write(settings_list2[i], align= "left", font= ("Baloo Chettan 2", 18, "normal"))
-                wheel.goto(20, 240 - setting_width * (i + 1))
-                wheel.write("◀", align= "center", font= ("Baloo Chettan 2", 18, "normal"))
-                wheel.goto(105, 240 - setting_width * (i + 1))
-                wheel.write(settings_list[i], align= "center", font= ("Baloo Chettan 2", 18, "normal"))
-                wheel.goto(190, 240 - setting_width * (i + 1))
-                wheel.write("▶", align= "center", font= ("Baloo Chettan 2", 18, "normal"))
-                i = i + 1
-            i = 0
-            for i in range (num_settings):
-                wheel.goto(5, 240 - (setting_width * (i + 1)) + 31)
-                wheel.pendown()
-                wheel.forward(30)
-                wheel.right(90)
-                wheel.forward(30)
-                wheel.right(90)
-                wheel.forward(30)
-                wheel.right(90)
-                wheel.forward(30)
-                wheel.right(90)
+    def Settings_Screen():
+        global turtle_drawing
+        if turtle_drawing == False:
+            if Settings_Exit == False:
                 wheel.penup()
-                i = i + 1
-            i = 0
-            for i in range (num_settings):
-                wheel.goto(173, 240 - (setting_width * (i + 1)) + 31)
+                wheel.goto(-230, 240)
                 wheel.pendown()
-                wheel.forward(30)
-                wheel.right(90)
-                wheel.forward(30)
-                wheel.right(90)
-                wheel.forward(30)
-                wheel.right(90)
-                wheel.forward(30)
-                wheel.right(90)
+                wheel.goto(230, 240)
+                wheel.goto(230, -240)
+                wheel.goto(-230, -240)
+                wheel.goto(-230, 240)
                 wheel.penup()
-                i = i + 1
-
-        Settings_Screen()
-
-    if settings_list[3] == "off":
-        print("---------------------------------------------------------------------")
-        number_color_theme = settings_list[0]
-        turtle_shown = settings_list[1]
-        connected_texture_on = settings_list[2]
-        mouse_controls = settings_list[3]
-        setting_exit = False
-        Settings_Help = 0
-        while setting_exit == False:
-            if Settings_Help == 0:
-                print("Standalone Settings:")
-                if number_color_theme == "old":
-                    print("1 - Color Theme: [old] new rainbow original-microsoft")
-                if number_color_theme == "new":
-                    print("1 - Color Theme: old [new] rainbow original-microsoft")
-                if number_color_theme == "rainbow":
-                    print("1 - Color Theme: old new [rainbow] original-microsoft")
-                if number_color_theme == "microsoft":
-                    print("1 - Color Theme: old new rainbow [original-microsoft]")
-                if turtle_shown == "shown":
-                    print("2 - Drawing Turtle: [shown] hidden")
-                if turtle_shown == "hidden":
-                    print("2 - Drawing Turtle: shown [hidden]")
-                if connected_texture_on == "connected":
-                    print("3 - Connected Grid Texture (Experimental!): [on] off")
-                if connected_texture_on == "off":
-                    print("3 - Connected Grid Texture (Experimental!): on [off]")
-                print(" ")
-                print("Mutually Exclusive Settings:")
-                if mouse_controls == "on":
-                    print("4 - Mouse Controls: [on] off")
-                elif mouse_controls == "off":
-                    print("4 - Mouse Controls: on [off]")
-                if mouse_controls == "on":
-                    print("5 - Keyboard Controls: on [off]")
-                elif mouse_controls == "off":
-                    print("5 - Keyboard Controls: [on] off")
-                print(" ")
-                print("6 - Exit Settings")
-                print(" ")
-            setting_change = input("Type the number of the setting you would like to change, or 6 to exit: ")
-            if setting_change == "1":
-                settingchange1exit = False
-                while settingchange1exit == False:
-                    print(" ")
-                    print("1 - old")
-                    print("2 - new")
-                    print("3 - rainbow")
-                    print("4 - microsoft")
-                    print(" ")
-                    setting1input = input("Type the number of the option you would like to switch this setting to: ")
-                    if setting1input == "1":
-                        print("Setting switched!")
-                        number_color_theme = "old"
-                        settingchange1exit = True
-                    elif setting1input == "2":
-                        print("Setting switched!")
-                        number_color_theme = "new"
-                        settingchange1exit = True
-                    elif setting1input == "3":
-                        print("Setting switched!")
-                        number_color_theme = "rainbow"
-                        settingchange1exit = True
-                    elif setting1input == "4":
-                        print("Setting switched!")
-                        number_color_theme = "microsoft"
-                        settingchange1exit = True
+                i = 0
+                turtle_drawing = True
+                for i in range (num_settings):
+                    if continue_working == False: break
+                    wheel.goto(-200, 240 - setting_width * (i + 1))
+                    wheel.write(settings_list2[i], align= "left", font= ("Baloo Chettan 2", 18, "normal"))
+                    wheel.goto(20, 240 - setting_width * (i + 1))
+                    wheel.write("◀", align= "center", font= ("Baloo Chettan 2", 18, "normal"))
+                    wheel.goto(105, 240 - setting_width * (i + 1))
+                    if len(settings_list[i]) >= 11:
+                        wheel.goto(105, 243 - setting_width * (i + 1))
+                        wheel.write(settings_list[i], align= "center", font= ("Baloo Chettan 2", 14, "normal"))
                     else:
-                        print("Invalid input! Please try again")
-            elif setting_change == "2":
-                print("Setting switched!")
-                if turtle_shown == "shown":
-                    turtle_shown = "hidden"
-                elif turtle_shown == "hidden":
-                    turtle_shown = "shown"
-            elif setting_change == "3":
-                print("Setting switched!")
-                if connected_texture_on == "connected":
-                    connected_texture_on = "normal"
-                elif connected_texture_on == "normal":
-                    connected_texture_on = "connected"
-            elif setting_change == "4" or setting_change == "5":
-                print("Setting switched!")
-                if mouse_controls == "on":
-                    mouse_controls = "off"
-                elif mouse_controls == "off":
-                    mouse_controls = "on"
-            elif setting_change == "6":
-                setting_exit = True
-            else:
-                print("Invalid input! Please try again")
-                Settings_Help = 1
+                        wheel.write(settings_list[i], align= "center", font= ("Baloo Chettan 2", 18, "normal"))
+                    wheel.goto(190, 240 - setting_width * (i + 1))
+                    wheel.write("▶", align= "center", font= ("Baloo Chettan 2", 18, "normal"))
+                    i = i + 1
+                turtle_drawing = False
+
+    def GetCoordsSettings(x, y):
+        global turtle_drawing
+        if turtle_drawing == False:
+            if Settings_Exit == False:
+                turtle_drawing = True
+                wheel.penup()
+                wheel.pencolor("white")
+                wheel.fillcolor("white")
+                i2 = 0
+                if 5 < x < 35:
+                    while i2 < num_settings:
+                        if (240 - (setting_width * (i2 + 1)) + 1) < y < (240 - (setting_width * (i2 + 1)) + 31):
+                            Setting_Change = i2 + 1
+                        i2 = i2 + 1
+                elif 173 < x < 203:
+                    while i2 < num_settings:
+                        if (240 - (setting_width * (i2 + 1)) + 1) < y < (240 - (setting_width * (i2 + 1)) + 31):
+                            Setting_Change = i2 + num_settings + 1
+                        i2 = i2 + 1
+                try:
+                    if Setting_Change > num_settings:
+                        Setting_Change = Setting_Change - num_settings
+                        set_index = (settings_list_list[(Setting_Change - 1)]).index(settings_list[Setting_Change - 1])
+                        if set_index + 2 > len(settings_list_list[(Setting_Change - 1)]):
+                            set_index = -1
+                        settings_list[Setting_Change - 1] = (settings_list_list[(Setting_Change - 1)])[set_index + 1]
+                        list_change = Setting_Change - 1
+                    elif Setting_Change <= num_settings:
+                        set_index = (settings_list_list[(Setting_Change - 1)]).index(settings_list[Setting_Change - 1])
+                        settings_list[Setting_Change - 1] = (settings_list_list[(Setting_Change - 1)])[set_index - 1]
+                        list_change = Setting_Change - 1
+
+                    wheel.goto(36, 240 - (setting_width * Setting_Change) + 31)
+                    wheel.pendown()
+                    wheel.begin_fill()
+                    wheel.forward(136)
+                    wheel.right(90)
+                    wheel.forward(30)
+                    wheel.right(90)
+                    wheel.forward(136)
+                    wheel.right(90)
+                    wheel.forward(30)
+                    wheel.right(90)
+                    wheel.end_fill()
+                    wheel.penup()
+                    wheel.goto(105, 240 - (setting_width * Setting_Change))
+                    wheel.pencolor("black")
+                    if len(settings_list[list_change]) >= 11:
+                        wheel.goto(105, 243 - (setting_width * Setting_Change))
+                        wheel.write(settings_list[list_change], align= "center", font= ("Baloo Chettan 2", 14, "normal"))
+                    else:
+                        wheel.write(settings_list[list_change], align= "center", font= ("Baloo Chettan 2", 18, "normal"))
+                except UnboundLocalError: pass
+                turtle_drawing = False
+
+    def Exit_Settings():
+        global Settings_Exit
+        global Draw_Menu
+        global Draw_Settings_Menu
+        global continue_working
+        global turtle_drawing
+        continue_working = False
+        turtle_drawing = False
+        Settings_Exit = True
+        Draw_Menu = False
+        Draw_Settings_Menu = False
+        turtle.bye()
+
+    while Settings_Exit == False:
+        try:
+            if Draw_Settings_Menu == False:
+                Settings_Screen()
+                Draw_Settings_Menu = True
+            turtle.onscreenclick(GetCoordsSettings)
+            turtle.onkey(Exit_Settings, "e")
+            turtle.listen()
+            turtle.mainloop()
+        except turtle.Terminator: break
+
+def SettingsOld():
+    print("---------------------------------------------------------------------")
+    number_color_theme = settings_list[0]
+    turtle_shown = settings_list[1]
+    connected_texture_on = settings_list[2]
+    mouse_controls = settings_list[3]
+    setting_exit = False
+    Settings_Help = 0
+    while setting_exit == False:
+        if Settings_Help == 0:
+            print("Standalone Settings:")
+            if number_color_theme == "old":
+                print("1 - Color Theme: [old] new rainbow original-microsoft")
+            if number_color_theme == "new":
+                print("1 - Color Theme: old [new] rainbow original-microsoft")
+            if number_color_theme == "rainbow":
+                print("1 - Color Theme: old new [rainbow] original-microsoft")
+            if number_color_theme == "microsoft":
+                print("1 - Color Theme: old new rainbow [original-microsoft]")
+            if turtle_shown == "shown":
+                print("2 - Drawing Turtle: [shown] hidden")
+            if turtle_shown == "hidden":
+                print("2 - Drawing Turtle: shown [hidden]")
+            if connected_texture_on == "connected":
+                print("3 - Connected Grid Texture (Experimental!): [on] off")
+            if connected_texture_on == "off":
+                print("3 - Connected Grid Texture (Experimental!): on [off]")
+            print(" ")
+            print("Mutually Exclusive Settings:")
+            if mouse_controls == "on":
+                print("4 - Mouse Controls: [on] off")
+            elif mouse_controls == "off":
+                print("4 - Mouse Controls: on [off]")
+            if mouse_controls == "on":
+                print("5 - Keyboard Controls: on [off]")
+            elif mouse_controls == "off":
+                print("5 - Keyboard Controls: [on] off")
+            print(" ")
+            print("6 - Exit Settings")
+            print(" ")
+        setting_change = input("Type the number of the setting you would like to change, or 6 to exit: ")
+        if setting_change == "1":
+            settingchange1exit = False
+            while settingchange1exit == False:
+                print(" ")
+                print("1 - old")
+                print("2 - new")
+                print("3 - rainbow")
+                print("4 - microsoft")
+                print(" ")
+                setting1input = input("Type the number of the option you would like to switch this setting to: ")
+                if setting1input == "1":
+                    print("Setting switched!")
+                    number_color_theme = "old"
+                    settingchange1exit = True
+                elif setting1input == "2":
+                    print("Setting switched!")
+                    number_color_theme = "new"
+                    settingchange1exit = True
+                elif setting1input == "3":
+                    print("Setting switched!")
+                    number_color_theme = "rainbow"
+                    settingchange1exit = True
+                elif setting1input == "4":
+                    print("Setting switched!")
+                    number_color_theme = "microsoft"
+                    settingchange1exit = True
+                else:
+                    print("Invalid input! Please try again")
+        elif setting_change == "2":
+            print("Setting switched!")
+            if turtle_shown == "shown":
+                turtle_shown = "hidden"
+            elif turtle_shown == "hidden":
+                turtle_shown = "shown"
+        elif setting_change == "3":
+            print("Setting switched!")
+            if connected_texture_on == "connected":
+                connected_texture_on = "normal"
+            elif connected_texture_on == "normal":
+                connected_texture_on = "connected"
+        elif setting_change == "4" or setting_change == "5":
+            print("Setting switched!")
+            if mouse_controls == "on":
+                mouse_controls = "off"
+            elif mouse_controls == "off":
+                mouse_controls = "on"
+        elif setting_change == "6":
+            setting_exit = True
+        else:
+            print("Invalid input! Please try again")
+            Settings_Help = 1
     return [number_color_theme, turtle_shown, connected_texture_on, mouse_controls]
 
 def MainMenuScreen():
@@ -1803,6 +1860,7 @@ while Game_Exit == False:
             global continue_working
             global Exit_Once
             global show_win_message
+            global Settings_Exit
             if -100 < x < 100:
                 if 90 < y < 130:
                     Main_Input = "1"
@@ -1848,14 +1906,16 @@ while Game_Exit == False:
                 elif Main_Input == "3":
                     Credits()
                 elif Main_Input == "4":
-                    turtle.clearscreen()
+                    turtle.resetscreen()
                     turtle.bye()
-                    settings_list = Settings()
+                    Settings_Exit = False
+                    continue_working = True
+                    SettingsNew()
                 elif Main_Input == "5":
                     Game_Exit = True
                     Main_Menu_Exit = True
                     turtle.bye()
-                else: pass
+                elif Main_Input == "bigger bruh": pass
             except UnboundLocalError: pass
 
         while Main_Menu_Exit == False:
@@ -1875,6 +1935,8 @@ while Game_Exit == False:
             if First_Intro_Done == True:
                 print("TurtleSweeper!")
             elif First_Intro_Done == False:
+                print("TurtleSweeper - v.1.4")
+                print("Welcome to TurtleSweeper!")
                 First_Intro_Done = True
             print('Type "1" to play')
             print('Type "2" for help')
@@ -1911,7 +1973,7 @@ while Game_Exit == False:
             Credits()
         elif Main_Input == "4":
             Help_Needed_Main = 0
-            settings_list = Settings()
+            settings_list = SettingsOld()
         elif Main_Input == "5":
             Help_Needed_Main = 0
             Game_Exit = True
