@@ -2,14 +2,15 @@ import turtle
 import random
 import math
 
-settings_list = ["rainbow", "shown", "unconnected", "on", "fixed"]
-settings_list2 = ["Color Theme:", "Drawing Turtle:", "Grid Textures:", "Mouse Controls:", "# of Bombs:"]
+settings_list = ["new", "shown", "unconnected", "on", "fixed", "new"]
+settings_list2 = ["Color Theme:", "Drawing Turtle:", "Grid Textures:", "Mouse Controls:", "# of Bombs:", "Flag Textures:"]
 Color_Theme_list = ["old", "new", "microsoft", "rainbow"]
 Drawing_Turtle_list = ["shown", "hidden"]
 Grid_Texture_list = ["connected (old)", "connected (new)", "unconnected"]
 Mouse_Control_list = ["on", "off"]
 Bomb_Number_list = ["fixed", "random"]
-settings_list_list = [Color_Theme_list, Drawing_Turtle_list, Grid_Texture_list, Mouse_Control_list, Bomb_Number_list]
+Flag_Animation_list = ["new", "old"]
+settings_list_list = [Color_Theme_list, Drawing_Turtle_list, Grid_Texture_list, Mouse_Control_list, Bomb_Number_list, Flag_Animation_list]
 
 Has_Player_WonG = 0
 Game_Over = False
@@ -27,6 +28,7 @@ num_settings = len(settings_list)
 setting_width = 480/(num_settings + 1)
 Settings_Exit = False
 First_Intro_Done = False
+# time = 0
 
 def Play():
     global Has_Player_WonG
@@ -666,19 +668,43 @@ def Play():
                     wee.left(90)
                     wee.end_fill()
                 elif colors_list.index(color) == 10:
-                    if settings_list[0] == "rainbow":
-                        wee.pencolor("white")
-                    wee.fillcolor(colors_list[10])
-                    wee.begin_fill()
-                    wee.forward(Square_SizeG)
-                    wee.left(90)
-                    wee.forward(Square_SizeG)
-                    wee.left(90)
-                    wee.forward(Square_SizeG)
-                    wee.left(90)
-                    wee.forward(Square_SizeG)
-                    wee.left(90)
-                    wee.end_fill()
+                    if settings_list[5] == "old":
+                        if settings_list[0] == "rainbow":
+                            wee.pencolor("white")
+                        wee.fillcolor(colors_list[10])
+                        wee.begin_fill()
+                        wee.forward(Square_SizeG)
+                        wee.left(90)
+                        wee.forward(Square_SizeG)
+                        wee.left(90)
+                        wee.forward(Square_SizeG)
+                        wee.left(90)
+                        wee.forward(Square_SizeG)
+                        wee.left(90)
+                        wee.end_fill()
+
+                    elif settings_list[5] == "new":
+                        wee.penup()
+                        wee.forward(1/6 * Square_SizeG)
+                        wee.left(90)
+                        wee.forward(1/8 * Square_SizeG)
+                        wee.pendown()
+                        wee.begin_fill()
+                        wee.pensize(2)
+                        wee.pencolor("black")
+                        wee.fillcolor(colors_list[10])
+                        wee.forward(3/4 * Square_SizeG)
+                        wee.right(110.5555555555555555555555)
+                        wee.forward(math.sqrt((1/4 * Square_SizeG)**2 + (2/3 * Square_SizeG)**2))
+                        wee.right(138.8888888888888888888)
+                        wee.forward(math.sqrt((1/4 * Square_SizeG)**2 + (2/3 * Square_SizeG)**2))
+                        wee.end_fill()
+                        wee_cards = Map_Wee(x, y)
+                        wee.penup()
+                        wee.goto(wee_cards[0], wee_cards[1])
+                        wee.pendown()
+                        wee.seth(0)
+                        wee.pensize(1)
                 elif colors_list.index(color) == 11:
                     wee.pencolor("black")
                     wee.fillcolor("white")
@@ -752,22 +778,47 @@ def Play():
                     wee.left(90)
                     wee.end_fill()
                 elif colors_list.index(color) == 10:
-                    if settings_list[0] == "rainbow":
-                        wee.pencolor("white")
-                    wee.fillcolor(colors_list[10])
-                    wee.begin_fill()
-                    wee.forward(Square_SizeG)
-                    wee.left(90)
-                    wee.forward(Square_SizeG)
-                    wee.left(90)
-                    wee.forward(Square_SizeG)
-                    wee.left(90)
-                    wee.forward(Square_SizeG)
-                    wee.left(90)
-                    wee.end_fill()
+                    if settings_list[5] == "old":
+                        if settings_list[0] == "rainbow":
+                            wee.pencolor("white")
+                        wee.fillcolor(colors_list[10])
+                        wee.begin_fill()
+                        wee.forward(Square_SizeG)
+                        wee.left(90)
+                        wee.forward(Square_SizeG)
+                        wee.left(90)
+                        wee.forward(Square_SizeG)
+                        wee.left(90)
+                        wee.forward(Square_SizeG)
+                        wee.left(90)
+                        wee.end_fill()
+
+                    elif settings_list[5] == "new":
+                        wee.penup()
+                        wee.forward(1/6 * Square_SizeG)
+                        wee.left(90)
+                        wee.forward(1/8 * Square_SizeG)
+                        wee.pendown()
+                        wee.begin_fill()
+                        wee.pensize(2)
+                        wee.pencolor("black")
+                        wee.fillcolor(colors_list[10])
+                        wee.forward(3/4 * Square_SizeG)
+                        wee.right(110.5555555555555555555555)
+                        wee.forward(math.sqrt((1/4 * Square_SizeG)**2 + (2/3 * Square_SizeG)**2))
+                        wee.right(138.8888888888888888888)
+                        wee.forward(math.sqrt((1/4 * Square_SizeG)**2 + (2/3 * Square_SizeG)**2))
+                        wee.end_fill()
+                        wee_cards = Map_Wee(x, y)
+                        wee.penup()
+                        wee.goto(wee_cards[0], wee_cards[1])
+                        wee.pendown()
+                        wee.seth(0)
+                        wee.pensize(1)
                 elif colors_list.index(color) == 11:
                     if settings_list[0] != "rainbow":
                         wee.pencolor("black")
+                        wee.fillcolor("white")
                         wee.begin_fill()
                         wee.forward(Square_SizeG)
                         wee.left(90)
@@ -788,9 +839,14 @@ def Play():
                         Black_List = []
                         while sides_Checked < 4:
                             if Convert_to_Square_ID(x + Cx, y + Cy) != "null":
-                                if Dig_List[Convert_to_Square_ID(x + Cx, y + Cy)] == "dug" or Flag_List[Convert_to_Square_ID(x + Cx, y + Cy)] == 1:
-                                    wee.pencolor("white")
-                                    Black_List.append(str(Cx) + str(Cy))
+                                if Dig_List[Convert_to_Square_ID(x + Cx, y + Cy)] == "dug":
+                                    if settings_list[5] == "old":
+                                        if Flag_List[Convert_to_Square_ID(x + Cx, y + Cy)] == 1:
+                                            wee.pencolor("white")
+                                            Black_List.append(str(Cx) + str(Cy))
+                                    else:
+                                        wee.pencolor("white")
+                                        Black_List.append(str(Cx) + str(Cy))
                                 else:
                                     wee.pencolor("black")
                             else:
@@ -932,17 +988,43 @@ def Play():
                     wee.left(90)
                     wee.end_fill()
                 elif colors_list.index(color) == 10:
-                    wee.fillcolor(colors_list[10])
-                    wee.begin_fill()
-                    wee.forward(Square_SizeG)
-                    wee.left(90)
-                    wee.forward(Square_SizeG)
-                    wee.left(90)
-                    wee.forward(Square_SizeG)
-                    wee.left(90)
-                    wee.forward(Square_SizeG)
-                    wee.left(90)
-                    wee.end_fill()
+                    if settings_list[5] == "old":
+                        if settings_list[0] == "rainbow":
+                            wee.pencolor("white")
+                        wee.fillcolor(colors_list[10])
+                        wee.begin_fill()
+                        wee.forward(Square_SizeG)
+                        wee.left(90)
+                        wee.forward(Square_SizeG)
+                        wee.left(90)
+                        wee.forward(Square_SizeG)
+                        wee.left(90)
+                        wee.forward(Square_SizeG)
+                        wee.left(90)
+                        wee.end_fill()
+
+                    elif settings_list[5] == "new":
+                        wee.penup()
+                        wee.forward(1/6 * Square_SizeG)
+                        wee.left(90)
+                        wee.forward(1/8 * Square_SizeG)
+                        wee.pendown()
+                        wee.begin_fill()
+                        wee.pensize(2)
+                        wee.pencolor("black")
+                        wee.fillcolor(colors_list[10])
+                        wee.forward(3/4 * Square_SizeG)
+                        wee.right(110.5555555555555555555555)
+                        wee.forward(math.sqrt((1/4 * Square_SizeG)**2 + (2/3 * Square_SizeG)**2))
+                        wee.right(138.8888888888888888888)
+                        wee.forward(math.sqrt((1/4 * Square_SizeG)**2 + (2/3 * Square_SizeG)**2))
+                        wee.end_fill()
+                        wee_cards = Map_Wee(x, y)
+                        wee.penup()
+                        wee.goto(wee_cards[0], wee_cards[1])
+                        wee.pendown()
+                        wee.seth(0)
+                        wee.pensize(1)
                 elif colors_list.index(color) == 11:
                     wee.pencolor("black")
                     wee.fillcolor("white")
@@ -1043,18 +1125,43 @@ def Play():
                     wee.left(90)
                     wee.end_fill()
                 elif colors_list.index(color) == 10:
-                    wee.pencolor("white")
-                    wee.fillcolor(colors_list[10])
-                    wee.begin_fill()
-                    wee.forward(Square_SizeG)
-                    wee.left(90)
-                    wee.forward(Square_SizeG)
-                    wee.left(90)
-                    wee.forward(Square_SizeG)
-                    wee.left(90)
-                    wee.forward(Square_SizeG)
-                    wee.left(90)
-                    wee.end_fill()
+                    if settings_list[5] == "old":
+                        if settings_list[0] == "rainbow":
+                            wee.pencolor("white")
+                        wee.fillcolor(colors_list[10])
+                        wee.begin_fill()
+                        wee.forward(Square_SizeG)
+                        wee.left(90)
+                        wee.forward(Square_SizeG)
+                        wee.left(90)
+                        wee.forward(Square_SizeG)
+                        wee.left(90)
+                        wee.forward(Square_SizeG)
+                        wee.left(90)
+                        wee.end_fill()
+
+                    elif settings_list[5] == "new":
+                        wee.penup()
+                        wee.forward(1/6 * Square_SizeG)
+                        wee.left(90)
+                        wee.forward(1/8 * Square_SizeG)
+                        wee.pendown()
+                        wee.begin_fill()
+                        wee.pensize(2)
+                        wee.pencolor("black")
+                        wee.fillcolor(colors_list[10])
+                        wee.forward(3/4 * Square_SizeG)
+                        wee.right(110.5555555555555555555555)
+                        wee.forward(math.sqrt((1/4 * Square_SizeG)**2 + (2/3 * Square_SizeG)**2))
+                        wee.right(138.8888888888888888888)
+                        wee.forward(math.sqrt((1/4 * Square_SizeG)**2 + (2/3 * Square_SizeG)**2))
+                        wee.end_fill()
+                        wee_cards = Map_Wee(x, y)
+                        wee.penup()
+                        wee.goto(wee_cards[0], wee_cards[1])
+                        wee.pendown()
+                        wee.seth(0)
+                        wee.pensize(1)
                 elif colors_list.index(color) == 11:
                     wee.pencolor("white")
                     wee.fillcolor("white")
@@ -1065,9 +1172,14 @@ def Play():
                     Black_List = []
                     while sides_Checked < 4:
                         if Convert_to_Square_ID(x + Cx, y + Cy) != "null":
-                            if Dig_List[Convert_to_Square_ID(x + Cx, y + Cy)] == "dug" or Flag_List[Convert_to_Square_ID(x + Cx, y + Cy)] == 1:
-                                wee.pencolor("white")
-                                Black_List.append(str(Cx) + str(Cy))
+                            if Dig_List[Convert_to_Square_ID(x + Cx, y + Cy)] == "dug":
+                                if settings_list[5] == "old":
+                                    if Flag_List[Convert_to_Square_ID(x + Cx, y + Cy)] == 1:
+                                        wee.pencolor("white")
+                                        Black_List.append(str(Cx) + str(Cy))
+                                else:
+                                    wee.pencolor("white")
+                                    Black_List.append(str(Cx) + str(Cy))
                             else:
                                 wee.pencolor("black")
                         else:
@@ -1120,6 +1232,41 @@ def Play():
             Fill_Square_Old()
         elif settings_list[2] == "unconnected":
             Fill_Square_Unconnected()
+
+    # Failed Timer:
+
+    # tree = turtle.Turtle()
+    # tree.hideturtle()
+    # tree.pencolor("white")
+    # tree.fillcolor("white")
+    # tree.speed("fastest")
+    # timer_locx = 0
+    # timer_locy = 300
+
+    # def Timer():
+    #     global time
+    #     tree.penup()
+    #     tree.goto(timer_locx - 50, timer_locy + 25)
+    #     tree.pendown()
+    #     tree.begin_fill()
+    #     tree.forward(100)
+    #     tree.right(90)
+    #     tree.forward(50)
+    #     tree.right(90)
+    #     tree.forward(100)
+    #     tree.right(90)
+    #     tree.forward(50)
+    #     tree.right(90)
+    #     tree.end_fill()
+    #     tree.penup()
+    #     tree.goto(timer_locx, timer_locy)
+    #     tree.pencolor("black")
+    #     tree.write(time, align= "center", font= ("Baloo Chettan 2", 14, "normal"))
+    #     tree.pencolor("white")
+    #     time = time + 1
+    #     turtle.ontimer(Timer, 1000)
+
+    # Timer()
 
     # Main Loop for keyboard inputs
     if settings_list[3] == "off":
@@ -1323,6 +1470,61 @@ def Play():
             weed.pencolor("red")
             weed.write("NO", align="center", font=("Baloo Chettan 2", 12, "normal"))
 
+        def Player_Won_Again():
+            weed = turtle.Turtle()
+            weed.hideturtle()
+            weed.speed("fastest")
+
+            weed.penup()
+            weed.goto(-151, 100)
+            weed.pendown()
+            weed.fillcolor("white")
+            weed.begin_fill()
+            weed.right(90)
+            weed.forward(200)
+            weed.left(90)
+            weed.forward(302)
+            weed.left(90)
+            weed.forward(200)
+            weed.left(90)
+            weed.forward(302)
+            weed.end_fill()
+
+            weed.penup()
+            weed.goto(0,40)
+            weed.write("YOU WON!!!", align="center", font=("Baloo Chettan 2", 18, "normal"))
+            weed.goto(0,5)
+            weed.write("PLAY AGAIN?", align="center", font=("Baloo Chettan 2", 18, "normal"))
+            weed.goto(-116,-25)
+            weed.pendown()
+            weed.left(90)
+            weed.forward(50)
+            weed.left(90)
+            weed.forward(100)
+            weed.left(90)
+            weed.forward(50)
+            weed.left(90)
+            weed.forward(100)
+            weed.penup()
+            weed.goto(-67,-60)
+            weed.pencolor("green")
+            weed.write("YES", align="center", font=("Baloo Chettan 2", 12, "normal"))
+            weed.goto(17,-25)
+            weed.pendown()
+            weed.pencolor("black")
+            weed.left(90)
+            weed.forward(50)
+            weed.left(90)
+            weed.forward(100)
+            weed.left(90)
+            weed.forward(50)
+            weed.left(90)
+            weed.forward(100)
+            weed.penup()
+            weed.goto(67,-60)
+            weed.pencolor("red")
+            weed.write("NO", align="center", font=("Baloo Chettan 2", 12, "normal"))
+
         def TurtleClick(x, y):
             global Has_Player_WonG
             global Game_Over
@@ -1418,7 +1620,7 @@ def Play():
                             turtle.bye()
             else: pass
             if Has_Player_WonG == Win_VariableG and show_win_message == True:
-                print("You WON!!!")
+                Player_Won_Again()
                 Game_Over = True
                 show_win_message = False
 
