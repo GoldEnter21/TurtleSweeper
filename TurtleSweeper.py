@@ -28,6 +28,7 @@ num_settings = len(settings_list)
 setting_width = 480/(num_settings + 1)
 Settings_Exit = False
 First_Intro_Done = False
+Flag_Count = 0
 # time = 0
 
 def Play():
@@ -350,6 +351,7 @@ def Play():
 
     # Plants Bombs to Box_List
     def Create_Game():
+        global Flag_Count
         if settings_list[4] == "random":
             num_Box_List = 0
             while num_Box_List < Max_Squares:
@@ -358,10 +360,12 @@ def Play():
                     TheAppend = 0
                 if NextAppend <= Bomb_Probability:
                     TheAppend = "bomb"
+                    Flag_Count = Flag_Count + 1
                 Box_List.append(TheAppend)
                 num_Box_List = num_Box_List + 1
         elif settings_list[4] == "fixed":
             num_Bomb = round((0.000210883 * (Max_Squares ** 2)) + (0.104405 * Max_Squares) + 0.297919)
+            Flag_Count = num_Bomb
             num_Box_List = 0
             while num_Box_List < Max_Squares:
                 Nums_List.append(num_Box_List)
@@ -426,19 +430,20 @@ def Play():
             X_x = x + oxen[oxenI]
             if Convert_to_Square_ID(X_x, Y_y) != "null":
                 if Dig_List[Convert_to_Square_ID(X_x,Y_y)] == 0:
-                    if Box_List[Convert_to_Square_ID(X_x,Y_y)] > 0:
-                        Dig_List[Convert_to_Square_ID(X_x,Y_y)] = "dug"
-                        Flag_List[Convert_to_Square_ID(X_x,Y_y)] = "dug"
-                        wee_cords = Map_Wee(X_x,Y_y)
-                        wee.penup()
-                        wee.goto(wee_cords[0],wee_cords[1])
-                        wee.pendown()
-                        odd_Or_even2 = (X_x + Y_y) % 2
-                        Fill_Square(colors_list[Box_List[Convert_to_Square_ID(X_x,Y_y)]], odd_Or_even2, X_x, Y_y)
-                        add_to_Player1 = add_to_Player1 + 1
-                    if Box_List[Convert_to_Square_ID(X_x,Y_y)] == 0:
-                        if Temp_Zero_List.count(Convert_to_Square_ID(X_x,Y_y)) == 0:
-                            Temp_Zero_List.append(Convert_to_Square_ID(X_x,Y_y))
+                    if Flag_List[Convert_to_Square_ID(X_x,Y_y)] != 1:
+                        if Box_List[Convert_to_Square_ID(X_x,Y_y)] > 0:
+                            Dig_List[Convert_to_Square_ID(X_x,Y_y)] = "dug"
+                            Flag_List[Convert_to_Square_ID(X_x,Y_y)] = "dug"
+                            wee_cords = Map_Wee(X_x,Y_y)
+                            wee.penup()
+                            wee.goto(wee_cords[0],wee_cords[1])
+                            wee.pendown()
+                            odd_Or_even2 = (X_x + Y_y) % 2
+                            Fill_Square(colors_list[Box_List[Convert_to_Square_ID(X_x,Y_y)]], odd_Or_even2, X_x, Y_y)
+                            add_to_Player1 = add_to_Player1 + 1
+                        if Box_List[Convert_to_Square_ID(X_x,Y_y)] == 0:
+                            if Temp_Zero_List.count(Convert_to_Square_ID(X_x,Y_y)) == 0:
+                                Temp_Zero_List.append(Convert_to_Square_ID(X_x,Y_y))
             if itera % 3 == 0:
                 oxenI = 0
                 yiayI = yiayI + 1
@@ -1233,20 +1238,58 @@ def Play():
         elif settings_list[2] == "unconnected":
             Fill_Square_Unconnected()
 
-    # Failed Timer:
+    Square_Siz = 35
+    tree = turtle.Turtle()
+    tree.hideturtle()
+    tree.speed("fastest")
+    if settings_list[5] == "new":
+        tree.penup()
+        tree.goto(-41, 253.5)
+        tree.forward(1/6 * Square_Siz)
+        tree.left(90)
+        tree.forward(1/8 * Square_Siz)
+        tree.pendown()
+        tree.begin_fill()
+        tree.pensize(2)
+        tree.pencolor("black")
+        tree.fillcolor(colors_list[10])
+        tree.forward(3/4 * Square_Siz)
+        tree.right(110.5555555555555555555555)
+        tree.forward(math.sqrt((1/4 * Square_Siz)**2 + (2/3 * Square_Siz)**2))
+        tree.right(138.8888888888888888888)
+        tree.forward(math.sqrt((1/4 * Square_Siz)**2 + (2/3 * Square_Siz)**2))
+        tree.end_fill()
+        tree.seth(0)
+        tree.pensize(1)
+    elif settings_list[5] == "old":
+        tree.penup()
+        tree.goto(-43, 253.5)
+        tree.pendown()
+        if settings_list[0] == "rainbow":
+            tree.pencolor("white")
+        tree.fillcolor(colors_list[10])
+        tree.begin_fill()
+        tree.forward(Square_Siz)
+        tree.left(90)
+        tree.forward(Square_Siz)
+        tree.left(90)
+        tree.forward(Square_Siz)
+        tree.left(90)
+        tree.forward(Square_Siz)
+        tree.left(90)
+        tree.end_fill()
+    tree.pencolor("white")
+    tree.fillcolor("white")
+    tree.penup()
+    flag_locx = 25
+    flag_locy = 247
 
-    # tree = turtle.Turtle()
-    # tree.hideturtle()
-    # tree.pencolor("white")
-    # tree.fillcolor("white")
-    # tree.speed("fastest")
-    # timer_locx = 0
-    # timer_locy = 300
+    # Failed Timer:
 
     # def Timer():
     #     global time
     #     tree.penup()
-    #     tree.goto(timer_locx - 50, timer_locy + 25)
+    #     tree.goto(flag_locx - 50, flag_locy + 25)
     #     tree.pendown()
     #     tree.begin_fill()
     #     tree.forward(100)
@@ -1259,7 +1302,7 @@ def Play():
     #     tree.right(90)
     #     tree.end_fill()
     #     tree.penup()
-    #     tree.goto(timer_locx, timer_locy)
+    #     tree.goto(flag_locx, flag_locy)
     #     tree.pencolor("black")
     #     tree.write(time, align= "center", font= ("Baloo Chettan 2", 14, "normal"))
     #     tree.pencolor("white")
@@ -1414,6 +1457,27 @@ def Play():
                     Game_Over = True
     # Main Loop for mouse inputs
     elif settings_list[3] == "on":
+        def Flag_Counter():
+            tree.goto(flag_locx - 30, flag_locy + 55)
+            tree.pendown()
+            tree.begin_fill()
+            tree.forward(60)
+            tree.right(90)
+            tree.forward(50)
+            tree.right(90)
+            tree.forward(60)
+            tree.right(90)
+            tree.forward(50)
+            tree.right(90)
+            tree.end_fill()
+            tree.penup()
+            tree.goto(flag_locx, flag_locy)
+            tree.pencolor("black")
+            tree.write(Flag_Count, align= "center", font= ("Baloo Chettan 2", 24, "normal"))
+            tree.pencolor("white")
+
+        Flag_Counter()
+
         def Player_Play_Again():
 
             weed = turtle.Turtle()
@@ -1628,6 +1692,7 @@ def Play():
             global Has_Player_WonG
             global Game_Over
             global turtle_drawing
+            global Flag_Count
             if turtle_drawing == False:
                 if Game_Over == False:
                     square_x = (x + ((Square_SizeG * Grid_Width) / 2)) / Square_SizeG + 1
@@ -1657,6 +1722,8 @@ def Play():
                                     wee.pendown()
                                     Fill_Square(colors_list[10], "bruh", XcOd, YcOd)
                                     Flag_List[Convert_to_Square_ID(XcOd, YcOd)] = 1
+                                    Flag_Count = Flag_Count - 1
+                                    Flag_Counter()
                                     turtle_drawing = False
                         elif User_Input_list[0] == "u":
                             User_Input_list2 = (User_Input_list[1]).split(",")
@@ -1671,6 +1738,8 @@ def Play():
                                     wee.pendown()
                                     Fill_Square("white", "bruh", XcOd, YcOd)
                                     Flag_List[Convert_to_Square_ID(XcOd, YcOd)] = 0
+                                    Flag_Count = Flag_Count + 1
+                                    Flag_Counter()
                                     turtle_drawing = False
             else: pass
 
@@ -2063,6 +2132,7 @@ while Game_Exit == False:
             global Exit_Once
             global show_win_message
             global Settings_Exit
+            global Flag_Count
             if -100 < x < 100:
                 if 90 < y < 130:
                     Main_Input = "1"
@@ -2085,6 +2155,7 @@ while Game_Exit == False:
                         continue_working = True
                         Exit_Once = False
                         show_win_message = True
+                        Flag_Count = 0
                         Play()
                         Played_Once = True
                         if Would_Play_Again == 1:
