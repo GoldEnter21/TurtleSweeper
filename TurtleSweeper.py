@@ -2,15 +2,16 @@ import turtle
 import random
 import math
 
-settings_list = ["new", "shown", "unconnected", "on", "fixed", "new"]
-settings_list2 = ["Color Theme:", "Drawing Turtle:", "Grid Textures:", "Mouse Controls:", "# of Bombs:", "Flag Textures:"]
+settings_list = ["new", "shown", "unconnected", "on", "fixed", "new", "enabled"]
+settings_list2 = ["Color Theme:", "Drawing Turtle:", "Grid Textures:", "Mouse Controls:", "# of Bombs:", "Flag Textures:", "Flag Counter:"]
 Color_Theme_list = ["old", "new", "microsoft", "rainbow"]
 Drawing_Turtle_list = ["shown", "hidden"]
 Grid_Texture_list = ["connected (old)", "connected (new)", "unconnected"]
 Mouse_Control_list = ["on", "off"]
 Bomb_Number_list = ["fixed", "random"]
 Flag_Animation_list = ["new", "old"]
-settings_list_list = [Color_Theme_list, Drawing_Turtle_list, Grid_Texture_list, Mouse_Control_list, Bomb_Number_list, Flag_Animation_list]
+Flag_Counter_list = ["enabled", "disabled"]
+settings_list_list = [Color_Theme_list, Drawing_Turtle_list, Grid_Texture_list, Mouse_Control_list, Bomb_Number_list, Flag_Animation_list, Flag_Counter_list]
 
 Has_Player_WonG = 0
 Game_Over = False
@@ -63,18 +64,22 @@ def Play():
             wheat.forward(200)
             wheat.right(180)
 
-        CreateBox(-100, 75)
+        CreateBox(-100, 103)
         wheat.penup()
-        wheat.goto(0,43)
+        wheat.goto(0,71)
         wheat.write("EASY", align="center", font=("Baloo Chettan 2", 12, "normal"))
-        CreateBox(-100, 20)
+        CreateBox(-100, 48)
         wheat.penup()
-        wheat.goto(0,-12)
+        wheat.goto(0,16)
         wheat.write("MEDIUM", align="center", font=("Baloo Chettan 2", 12, "normal"))
-        CreateBox(-100, -35)
+        CreateBox(-100, -7)
         wheat.penup()
-        wheat.goto(0,-67)
+        wheat.goto(0,-39)
         wheat.write("HARD", align="center", font=("Baloo Chettan 2", 12, "normal"))
+        CreateBox(-100, -62)
+        wheat.penup()
+        wheat.goto(0,-94)
+        wheat.write("CUSTOM", align="center", font=("Baloo Chettan 2", 12, "normal"))
 
         wheat.penup()
         wheat.goto(0, 205)
@@ -103,12 +108,14 @@ def Play():
                 global Grid_Height
                 global Difficulty_Choose
                 if -100 < x < 100:
-                    if 35 < y < 75:
+                    if 63 < y < 103:
                         Difficulty_Input = "1"
-                    elif -20 < y < 20:
+                    elif 8 < y < 48:
                         Difficulty_Input = "2"
-                    elif -75 < y < -35:
+                    elif -47 < y < -7:
                         Difficulty_Input = "3"
+                    elif -102 < y < -62:
+                        Difficulty_Input = "4"
                 else:
                     Difficulty_Input = "big bruh"
                 try:
@@ -126,6 +133,30 @@ def Play():
                         Grid_Width = 24
                         Grid_Height = 20
                         Difficulty_Choose = True
+                        turtle.bye()
+                    elif Difficulty_Input == "4":
+                        Difficulty_Choose = True
+                        turtle.bye()
+                        turtle.TurtleScreen._RUNNING = True
+                        turtle.setup(720, 675)
+                        GridWchosen = False
+                        GridHchosen = False
+                        Grid_Width = turtle.numinput("Grid Width", "Type the grid width for your custom game. Non-integers will be rounded!", minval = 8, maxval = 50)
+                        while GridWchosen == False:
+                            hmm = (type(Grid_Width) is not float)
+                            if hmm == True:
+                                Grid_Width = turtle.numinput("Grid Width", "Please type a number from 8 to 50 to set the grid width for your custom game", minval = 8, maxval = 50)
+                            elif hmm == False:
+                                Grid_Width = int(round(Grid_Width))
+                                GridWchosen = True
+                        Grid_Height = turtle.numinput("Grid Height", "Type the grid height for your custom game. Non-integers will be rounded!", minval = 8, maxval = 50)
+                        while GridHchosen == False:
+                            hmm = (type(Grid_Height) is not float)
+                            if hmm == True:
+                                Grid_Height = turtle.numinput("Grid Height", "Please type a number from 8 to 50 to set the grid height for your custom game", minval = 8, maxval = 50)
+                            elif hmm == False:
+                                Grid_Height = int(round(Grid_Height))
+                                GridHchosen = True
                         turtle.bye()
                     else: pass
                 except UnboundLocalError: pass
@@ -1238,51 +1269,57 @@ def Play():
         elif settings_list[2] == "unconnected":
             Fill_Square_Unconnected()
 
-    Square_Siz = 35
-    tree = turtle.Turtle()
-    tree.hideturtle()
-    tree.speed("fastest")
-    if settings_list[5] == "new":
+    if settings_list[6] == "enabled":
+        Relative_loc = wee.ycor()
+
+        Square_Siz = 35
+        tree = turtle.Turtle()
+        tree.hideturtle()
+        tree.speed("fastest")
+        if settings_list[5] == "new":
+            tree.penup()
+            tree.goto(-41, Relative_loc + 12)
+            tree.forward(1/6 * Square_Siz)
+            tree.left(90)
+            tree.forward(1/8 * Square_Siz)
+            tree.pendown()
+            tree.begin_fill()
+            tree.pensize(2)
+            tree.pencolor("black")
+            tree.fillcolor(colors_list[10])
+            tree.forward(3/4 * Square_Siz)
+            tree.right(110.5555555555555555555555)
+            tree.forward(math.sqrt((1/4 * Square_Siz)**2 + (2/3 * Square_Siz)**2))
+            tree.right(138.8888888888888888888)
+            tree.forward(math.sqrt((1/4 * Square_Siz)**2 + (2/3 * Square_Siz)**2))
+            tree.end_fill()
+            tree.seth(0)
+            tree.pensize(1)
+        elif settings_list[5] == "old":
+            tree.penup()
+            tree.goto(-45, Relative_loc + 12)
+            tree.pendown()
+            if settings_list[0] == "rainbow":
+                tree.pencolor("white")
+            tree.fillcolor(colors_list[10])
+            tree.begin_fill()
+            tree.forward(Square_Siz)
+            tree.left(90)
+            tree.forward(Square_Siz)
+            tree.left(90)
+            tree.forward(Square_Siz)
+            tree.left(90)
+            tree.forward(Square_Siz)
+            tree.left(90)
+            tree.end_fill()
+        tree.pencolor("white")
+        tree.fillcolor("white")
         tree.penup()
-        tree.goto(-41, 253.5)
-        tree.forward(1/6 * Square_Siz)
-        tree.left(90)
-        tree.forward(1/8 * Square_Siz)
-        tree.pendown()
-        tree.begin_fill()
-        tree.pensize(2)
-        tree.pencolor("black")
-        tree.fillcolor(colors_list[10])
-        tree.forward(3/4 * Square_Siz)
-        tree.right(110.5555555555555555555555)
-        tree.forward(math.sqrt((1/4 * Square_Siz)**2 + (2/3 * Square_Siz)**2))
-        tree.right(138.8888888888888888888)
-        tree.forward(math.sqrt((1/4 * Square_Siz)**2 + (2/3 * Square_Siz)**2))
-        tree.end_fill()
-        tree.seth(0)
-        tree.pensize(1)
-    elif settings_list[5] == "old":
-        tree.penup()
-        tree.goto(-43, 253.5)
-        tree.pendown()
-        if settings_list[0] == "rainbow":
-            tree.pencolor("white")
-        tree.fillcolor(colors_list[10])
-        tree.begin_fill()
-        tree.forward(Square_Siz)
-        tree.left(90)
-        tree.forward(Square_Siz)
-        tree.left(90)
-        tree.forward(Square_Siz)
-        tree.left(90)
-        tree.forward(Square_Siz)
-        tree.left(90)
-        tree.end_fill()
-    tree.pencolor("white")
-    tree.fillcolor("white")
-    tree.penup()
-    flag_locx = 25
-    flag_locy = 247
+        if Flag_Count > 1000:
+            flag_locx = 34
+        else:
+            flag_locx = 25
+        flag_locy = Relative_loc + 5.5
 
     # Failed Timer:
 
@@ -1457,26 +1494,27 @@ def Play():
                     Game_Over = True
     # Main Loop for mouse inputs
     elif settings_list[3] == "on":
-        def Flag_Counter():
-            tree.goto(flag_locx - 30, flag_locy + 55)
-            tree.pendown()
-            tree.begin_fill()
-            tree.forward(60)
-            tree.right(90)
-            tree.forward(50)
-            tree.right(90)
-            tree.forward(60)
-            tree.right(90)
-            tree.forward(50)
-            tree.right(90)
-            tree.end_fill()
-            tree.penup()
-            tree.goto(flag_locx, flag_locy)
-            tree.pencolor("black")
-            tree.write(Flag_Count, align= "center", font= ("Baloo Chettan 2", 24, "normal"))
-            tree.pencolor("white")
+        if settings_list[6] == "enabled":
+            def Flag_Counter():
+                tree.goto(flag_locx - 34, flag_locy + 55)
+                tree.pendown()
+                tree.begin_fill()
+                tree.forward(80)
+                tree.right(90)
+                tree.forward(50)
+                tree.right(90)
+                tree.forward(80)
+                tree.right(90)
+                tree.forward(50)
+                tree.right(90)
+                tree.end_fill()
+                tree.penup()
+                tree.goto(flag_locx, flag_locy)
+                tree.pencolor("black")
+                tree.write(Flag_Count, align= "center", font= ("Baloo Chettan 2", 24, "normal"))
+                tree.pencolor("white")
 
-        Flag_Counter()
+            Flag_Counter()
 
         def Player_Play_Again():
 
@@ -1723,7 +1761,8 @@ def Play():
                                     Fill_Square(colors_list[10], "bruh", XcOd, YcOd)
                                     Flag_List[Convert_to_Square_ID(XcOd, YcOd)] = 1
                                     Flag_Count = Flag_Count - 1
-                                    Flag_Counter()
+                                    if settings_list[6] == "enabled":
+                                        Flag_Counter()
                                     turtle_drawing = False
                         elif User_Input_list[0] == "u":
                             User_Input_list2 = (User_Input_list[1]).split(",")
@@ -1739,7 +1778,8 @@ def Play():
                                     Fill_Square("white", "bruh", XcOd, YcOd)
                                     Flag_List[Convert_to_Square_ID(XcOd, YcOd)] = 0
                                     Flag_Count = Flag_Count + 1
-                                    Flag_Counter()
+                                    if settings_list[6] == "enabled":
+                                        Flag_Counter()
                                     turtle_drawing = False
             else: pass
 
