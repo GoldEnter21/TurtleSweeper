@@ -678,9 +678,9 @@ def Play():
                     wee.pencolor(color)
                     if continue_working == True and colors_list.index(color) != 0:
                         if Grid_Width > 10 or Grid_Height > 8:
-                            wee.write(str(colors_list.index(color)), align = "center", font = ("Sans Serif", int(Square_SizeG / 2), "bold"))
+                            wee.write(str(colors_list.index(color)), align = "center", font = ("Sans", int(Square_SizeG / 2), "bold"))
                         else:
-                            wee.write(str(colors_list.index(color)), align = "center", font = ("Sans Serif", int(Square_SizeG / 2), "normal"))
+                            wee.write(str(colors_list.index(color)), align = "center", font = ("Sans", int(Square_SizeG / 2), "normal"))
                     wee.backward(Square_SizeG / 10)
                     wee.right(90)
                     wee.backward(Square_SizeG / 2)
@@ -788,9 +788,9 @@ def Play():
                     wee.pencolor(color)
                     if continue_working == True and colors_list.index(color) != 0:
                         if Grid_Width > 10 or Grid_Height > 8:
-                            wee.write(str(colors_list.index(color)), align = "center", font = ("Sans Serif", int(Square_SizeG / 2), "bold"))
+                            wee.write(str(colors_list.index(color)), align = "center", font = ("Sans", int(Square_SizeG / 2), "bold"))
                         else:
-                            wee.write(str(colors_list.index(color)), align = "center", font = ("Sans Serif", int(Square_SizeG / 2), "normal"))
+                            wee.write(str(colors_list.index(color)), align = "center", font = ("Sans", int(Square_SizeG / 2), "normal"))
                     wee.backward(Square_SizeG / 10)
                     wee.right(90)
                     wee.backward(Square_SizeG / 2)
@@ -1002,9 +1002,9 @@ def Play():
                     wee.pencolor(color)
                     if continue_working == True and colors_list.index(color) != 0:
                         if Grid_Width > 10 or Grid_Height > 8:
-                            wee.write(str(colors_list.index(color)), align = "center", font = ("Sans Serif", int(Square_SizeG / 2), "bold"))
+                            wee.write(str(colors_list.index(color)), align = "center", font = ("Sans", int(Square_SizeG / 2), "bold"))
                         else:
-                            wee.write(str(colors_list.index(color)), align = "center", font = ("Sans Serif", int(Square_SizeG / 2), "normal"))
+                            wee.write(str(colors_list.index(color)), align = "center", font = ("Sans", int(Square_SizeG / 2), "normal"))
                     wee.backward(Square_SizeG / 10)
                     wee.right(90)
                     wee.backward(Square_SizeG / 2)
@@ -1140,9 +1140,9 @@ def Play():
                     wee.pencolor(color)
                     if continue_working == True and colors_list.index(color) != 0:
                         if Grid_Width > 10 or Grid_Height > 8:
-                            wee.write(str(colors_list.index(color)), align = "center", font = ("Sans Serif", int(Square_SizeG / 2), "bold"))
+                            wee.write(str(colors_list.index(color)), align = "center", font = ("Sans", int(Square_SizeG / 2), "bold"))
                         else:
-                            wee.write(str(colors_list.index(color)), align = "center", font = ("Sans Serif", int(Square_SizeG / 2), "normal"))
+                            wee.write(str(colors_list.index(color)), align = "center", font = ("Sans", int(Square_SizeG / 2), "normal"))
                     wee.backward(Square_SizeG / 10)
                     wee.right(90)
                     wee.backward(Square_SizeG / 2)
